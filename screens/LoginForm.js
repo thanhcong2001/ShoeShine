@@ -49,7 +49,7 @@ const LoginForm = ({ navigation }) => {
                     />
                 </View>
                 <View style={styles.Button}>
-                    <Button title="Login" color="blue" onPress={handleLogin} />
+                    <Button title="Login" color="blue" onPress={handleLogin}/>
                 </View>
                 <View style={styles.Vertical}>
                     <View style={{ flex: 1, height: 2, backgroundColor: 'white', marginVertical: 10 }}>

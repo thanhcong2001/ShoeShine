@@ -3,7 +3,7 @@ import React from 'react'
 import shoe1 from '../assets/shoe1.jpg'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const StoreNearYou = () => {
+const StoreNearYou = ({ navigation }) => {
   const storeNear = [
     { id: '1', name: 'Shoes Health', distance: '500m', image: require('../assets/laudary.jpg') },
     { id: '2', name: 'Cosmo Store', distance: '700m', image: require('../assets/cosmo.jpg') },
@@ -20,7 +20,9 @@ const StoreNearYou = () => {
   ];
 
   const renderStoreItem = ({ item }) => (
-    <TouchableOpacity style={styles.Store}>
+    <TouchableOpacity style={styles.Store} onPress={() => {
+      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image, Distance: item.distance })
+    }}>
       <Image source={item.image} style={styles.ImageStore} />
       <Text style={styles.StoreName}>{item.name}</Text>
       <Text style={styles.StoreLocation}>{item.distance}</Text>
@@ -53,6 +55,8 @@ const styles = StyleSheet.create({
   All: {
     flex: 1,
     backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderColor: '#EBF0FF'
   },
   Container: {
     flexDirection: 'row',
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
   },
   CleaningPic: {
     marginTop: hp('2.6%'),
-    marginLeft:wp('1%'),
+    marginLeft: wp('1%'),
     width: wp('90%'),
     height: hp('25.2%'),
     marginBottom: hp('1.5%'),
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
     marginTop: wp('0.2%'),
     marginLeft: wp('1%'),
     elevation: 5,
-    marginBottom:hp('1%'),
+    marginBottom: hp('1%'),
   },
   ImageStore: {
     width: wp('37%'),
@@ -108,7 +112,7 @@ const styles = StyleSheet.create({
     color: '#40BFFF'
   },
   RecommendStore: {
-    alignItems:'center',
-    flex:1,
+    alignItems: 'center',
+    flex: 1,
   },
 })

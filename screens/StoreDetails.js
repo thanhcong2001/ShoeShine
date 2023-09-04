@@ -67,7 +67,7 @@ const StoreDetails = ({ route }) => {
     }}>
       <Image source={{ uri: item.imageUrl }} style={styles.ImageStore1} />
       <Text style={styles.StoreName}>{item.name}</Text>
-      <Image style={{width:wp('20%'),height:hp('1.8%')}} source={rating1}/>
+      <Image style={{ width: wp('20%'), height: hp('1.8%') }} source={rating1} />
       <Text style={styles.StoreLocation}>{item.distance}</Text>
       <Text style={styles.StoreLocation}>{item.location}</Text>
     </TouchableOpacity>
@@ -179,7 +179,7 @@ const StoreDetails = ({ route }) => {
           />
         </View>
         <View style={styles.Button}>
-          <Button title='Booking Service'/>
+          <Button title='Booking Service' />
         </View>
       </ScrollView>
     </View>
@@ -193,6 +193,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     paddingRight: wp('1%'),
+    borderTopWidth: 1,
+    borderColor: '#EBF0FF'
   },
   CleaningPic: {
     alignSelf: 'center',
@@ -295,11 +297,11 @@ const styles = StyleSheet.create({
     marginTop: hp('1%'),
     marginBottom: hp('0.7%')
   },
-  Button:{
-    width:wp('90%'),
-    marginLeft:wp('6.8%'),
-    borderRadius:20,
-    paddingTop:wp('2%'),
-    paddingBottom:wp('5%')
+  Button: {
+    width: wp('90%'),
+    marginLeft: wp('6.8%'),
+    borderRadius: 20,
+    paddingTop: wp('2%'),
+    paddingBottom: wp('5%')
   }
 })

@@ -39,22 +39,21 @@ const HomePage = ({ navigation }) => {
   );
   // Recommended Store
   const storeRecommemed = [
-    { id: '1', name: 'Store Mr.Phui', distance: '1.2km', location: 'District 8', imageUrl: 'https://www.iuoss.com/wp-content/uploads/2017/09/1-1024x683.jpg' },
-    { id: '2', name: 'BB Cleaning', distance: '4km', location: 'District 3', imageUrl: 'https://alltop.vn/backend/media/images/posts/1813/BB.Cleaning-124037.jpg' },
-    { id: '3', name: 'Store DR.Thong', distance: '5km', location: 'Thu Duc City', imageUrl: 'https://images.foody.vn/res/g72/712142/prof/s/foody-upload-api-foody-mobile-foody-mobile-tt132-j-181116095139.jpg' },
-    { id: '4', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', imageUrl: 'https://afamilycdn.com/150157425591193600/2020/10/29/photo-1-16039495200851709893576-1603950286888-16039502871581213394662.jpg' },
-    { id: '5', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', imageUrl: 'https://channel.mediacdn.vn/thumb_w/640/2019/1/2/photo-1-15464333812922128250200.jpg' },
-    { id: '6', name: 'Store X-Clean', distance: '10km', location: 'District 1', imageUrl: 'https://static.riviu.co/960/image/2020/12/12/fd192faf7a9edf892baef1ae2f1f4eb8_output.jpeg' },
-    { id: '7', name: 'Store DR.Thong', distance: '5km', location: 'Thu Duc City', imageUrl: 'https://images.foody.vn/res/g72/712142/prof/s/foody-upload-api-foody-mobile-foody-mobile-tt132-j-181116095139.jpg' },
-    { id: '8', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', imageUrl: 'https://afamilycdn.com/150157425591193600/2020/10/29/photo-1-16039495200851709893576-1603950286888-16039502871581213394662.jpg' },
-    { id: '9', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', imageUrl: 'https://channel.mediacdn.vn/thumb_w/640/2019/1/2/photo-1-15464333812922128250200.jpg' },
-    { id: '10', name: 'Store X-Clean', distance: '10km', location: 'District 1', imageUrl: 'https://static.riviu.co/960/image/2020/12/12/fd192faf7a9edf892baef1ae2f1f4eb8_output.jpeg' },
+    { id: '1', name: 'Store Mr.Phui', distance: '1.2km', location: 'District 8', image: require('../assets/Phui.jpg')},
+    { id: '2', name: 'BB Cleaning', distance: '4km', location: 'District 3', image: require('../assets/BBCleaning.jpg') },
+    { id: '3', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg')},
+    { id: '4', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Buzz.jpg')},
+    { id: '5', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/xClean.jpg')},
+    { id: '6', name: 'Store DR.Thong', distance: '5km', location: 'Thu Duc City', image: require('../assets/DrThong.jpg') },
+    { id: '7', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/Phui.jpg') },
+    { id: '8', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Phui.jpg') },
+    { id: '9', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/Phui.jpg')},
   ];
   const renderStoreRecommemed = ({ item }) => (
     <TouchableOpacity style={styles.Recommended} onPress={() => {
-      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.imageUrl })
+      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image })
     }}>
-      <Image source={{ uri: item.imageUrl }} style={styles.ImageStore} />
+      <Image source={item.image} style={styles.ImageStore} />
       <Text style={styles.StoreName}>{item.name}</Text>
       <Image style={{width:wp('20%'),height:hp('1.8%')}} source={rating1}/>
       <Text style={styles.StoreLocation}>{item.distance}</Text>
@@ -95,7 +94,7 @@ const HomePage = ({ navigation }) => {
       <ScrollView style={styles.scrollView}>
         <ImageBackground style={styles.CleaningPic} blurRadius={1.2} source={cleaning} imageStyle={{
           borderRadius: 6, borderWidth: 1,
-          borderColor: 'black',
+          borderColor: 'black'
         }}>
           <Text style={styles.CleaningTitle}>Voucher Shoes Care 50% Off</Text>
           <Countdown style={styles.Time}
@@ -247,8 +246,9 @@ const styles = StyleSheet.create({
     marginLeft: wp('2%'),
   },
   CleaningPic: {
+    marginRight:wp('1%'),
     marginTop: hp('2.6%'),
-    marginLeft: wp('1%'),
+    marginLeft: wp('1.5%'),
     width: wp('90%'),
     height: hp('25.2%'),
     marginBottom: hp('1.5%'),
