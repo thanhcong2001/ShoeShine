@@ -17,6 +17,8 @@ import Gender from '../screens/Gender'
 import UpdatePhone from '../screens/UpdatePhone'
 import UpdateEmail from '../screens/UpdateEmail'
 import UpdatePass from '../screens/UpdatePass'
+import Review from '../screens/Review'
+import WriteFeed from '../screens/WriteFeed'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -70,7 +72,8 @@ const MainStackNavigator = () => {
       <Stack.Screen name="UpdateEmail" component={UpdateEmail} options={{title:'Email'}} />
       <Stack.Screen name="UpdatePhone" component={UpdatePhone} options={{title:'Phone Number'}} />
       <Stack.Screen name="UpdatePass" component={UpdatePass} options={{title:'Change Password'}} />
-
+      <Stack.Screen name="Review" component={Review} options={{title:'Review'}} />
+      <Stack.Screen name="WriteFeed" component={WriteFeed} options={{title:'Write Review'}} />
     </Stack.Navigator>
   );
 };
