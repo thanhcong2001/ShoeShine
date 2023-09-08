@@ -52,18 +52,18 @@ const StoreDetails = ({ route, navigation }) => {
     { id: '1', name: 'Store Mr.Phui', distance: '1.2km', location: 'District 8', image: require('../assets/Phui.jpg') },
     { id: '2', name: 'BB Cleaning', distance: '4km', location: 'District 3', image: require('../assets/BBCleaning.jpg') },
     { id: '3', name: 'Store DR.Thong', distance: '5km', location: 'Thu Duc City', image: require('../assets/DrThong.jpg') },
-    { id: '4', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg')},
+    { id: '4', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg') },
     { id: '5', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Buzz.jpg') },
     { id: '6', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/xClean.jpg') },
     { id: '7', name: 'Store DR.Thong', distance: '5km', location: 'Thu Duc City', image: require('../assets/DrThong.jpg') },
-    { id: '8', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg')},
+    { id: '8', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg') },
     { id: '9', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Buzz.jpg') },
     { id: '10', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/xClean.jpg') },
   ];
   const renderStoreItem = ({ item }) => (
 
     <TouchableOpacity style={styles.Recommended} onPress={() => {
-      navigation.navigate('StoreDetails', { storeName: item.name,Distance:item.distance,storeImage:item.image})
+      navigation.navigate('StoreDetails', { storeName: item.name, Distance: item.distance, storeImage: item.image })
     }}>
       <Image source={item.image} style={styles.ImageStore1} />
       <Text style={styles.StoreName}>{item.name}</Text>
@@ -180,8 +180,10 @@ const StoreDetails = ({ route, navigation }) => {
             contentContainerStyle={styles.StoreList}
           />
         </View>
-        <View style={styles.Button}>
-          <Button title='Booking Service' />
+        <View>
+          <TouchableOpacity style={styles.Button} activeOpacity={0.7}>
+            <Text style={styles.Txt}>Booking Service</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
@@ -300,10 +302,19 @@ const styles = StyleSheet.create({
     marginBottom: hp('0.7%')
   },
   Button: {
-    width: wp('90%'),
-    marginLeft: wp('6.8%'),
-    borderRadius: 20,
-    paddingTop: wp('2%'),
-    paddingBottom: wp('5%')
+    borderWidth: 2,
+    borderRadius: 10,
+    height: hp('7%'),
+    borderColor: '#EBF0FF',
+    marginLeft: wp('6%'),
+    backgroundColor: '#40BFFF',
+    marginRight:wp('2%')
+  },  
+  Txt: {
+    alignSelf: 'center',
+    marginTop: hp('1.7%'),
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: wp('4.4%')
   }
 })

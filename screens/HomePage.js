@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     width: wp('90%'),
     height: hp('25.2%'),
     marginBottom: hp('1.5%'),
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   CleaningTitle: {
     fontWeight: 'bold',

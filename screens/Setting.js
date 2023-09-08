@@ -5,6 +5,8 @@ import sent from '../assets/sent.png'
 import appointment from '../assets/appointment.png'
 import location from '../assets/location.png'
 import creditCard from '../assets/payment.png'
+import shop from '../assets/shopTake.png'
+
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const Setting = ({ navigation }) => {
@@ -40,10 +42,18 @@ const Setting = ({ navigation }) => {
           <Text style={styles.Title}>Address</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>{navigation.navigate('Payment')}}>
         <View style={styles.Account}>
           <Image source={creditCard} style={styles.Image} />
           <Text style={styles.Title}>Payment</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=>{
+        navigation.navigate('RegisterStore')
+      }}>
+        <View style={styles.Account}>
+          <Image source={shop} style={styles.Image} />
+          <Text style={styles.Title}>Register Store</Text>
         </View>
       </TouchableOpacity>
     </View>

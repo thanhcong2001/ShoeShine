@@ -19,6 +19,9 @@ import UpdateEmail from '../screens/UpdateEmail'
 import UpdatePass from '../screens/UpdatePass'
 import Review from '../screens/Review'
 import WriteFeed from '../screens/WriteFeed'
+import Payment from '../screens/Payment'
+import RegisterStore from '../screens/RegisterStore'
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -74,6 +77,9 @@ const MainStackNavigator = () => {
       <Stack.Screen name="UpdatePass" component={UpdatePass} options={{title:'Change Password'}} />
       <Stack.Screen name="Review" component={Review} options={{title:'Review'}} />
       <Stack.Screen name="WriteFeed" component={WriteFeed} options={{title:'Write Review'}} />
+      <Stack.Screen name="RegisterStore" component={RegisterStore} options={{title:'Register Store'}} />
+      <Stack.Screen name="Payment" component={Payment} options={{title:'Payment'}} />
+
     </Stack.Navigator>
   );
 };
