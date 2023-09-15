@@ -61,25 +61,24 @@ const MainStackNavigator = () => {
                   source={require('../assets/loupe.png')} // Thay bằng đường dẫn tới icon search
                   style={{
                     width: wp('5.2%'),
-                    height: hp('2.5%'), marginLeft:wp('16%')
+                    height: hp('2.5%'), marginLeft: wp('16%')
                   }}
                 />
               </TouchableOpacity>
             </View>
           )
         }} />
-      <Stack.Screen name="StoreDetails" component={StoreDetails} options={({ route}) => ({ title: route.params.storeName })} />
+      <Stack.Screen name="StoreDetails" component={StoreDetails} options={({ route }) => ({ title: route.params.storeName })} />
       <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="UpdateName" component={UpdateName} options={{title:'Name'}} />
-      <Stack.Screen name="Gender" component={Gender} options={{title:'Gender'}} />
-      <Stack.Screen name="UpdateEmail" component={UpdateEmail} options={{title:'Email'}} />
-      <Stack.Screen name="UpdatePhone" component={UpdatePhone} options={{title:'Phone Number'}} />
-      <Stack.Screen name="UpdatePass" component={UpdatePass} options={{title:'Change Password'}} />
-      <Stack.Screen name="Review" component={Review} options={{title:'Review'}} />
-      <Stack.Screen name="WriteFeed" component={WriteFeed} options={{title:'Write Review'}} />
-      <Stack.Screen name="RegisterStore" component={RegisterStore} options={{title:'Register Store'}} />
-      <Stack.Screen name="Payment" component={Payment} options={{title:'Payment'}} />
-
+      <Stack.Screen name="UpdateName" component={UpdateName} options={{ title: 'Name' }} />
+      <Stack.Screen name="Gender" component={Gender} options={{ title: 'Gender' }} />
+      <Stack.Screen name="UpdateEmail" component={UpdateEmail} options={{ title: 'Email' }} />
+      <Stack.Screen name="UpdatePhone" component={UpdatePhone} options={{ title: 'Phone Number' }} />
+      <Stack.Screen name="UpdatePass" component={UpdatePass} options={{ title: 'Change Password' }} />
+      <Stack.Screen name="Review" component={Review} options={{ title: 'Review' }} />
+      <Stack.Screen name="WriteFeed" component={WriteFeed} options={{ title: 'Write Review' }} />
+      <Stack.Screen name="RegisterStore" component={RegisterStore} options={{ title: 'Register Store' }} />
+      <Stack.Screen name="Payment" component={Payment} options={{ title: 'Payment' }} />
     </Stack.Navigator>
   );
 };

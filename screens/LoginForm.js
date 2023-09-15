@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Button, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, ImageBackground, TextInput, Button, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import logo from '../assets/logo.png'
 import backGround from '../assets/sneaker.jpg'
@@ -7,20 +7,26 @@ import lock from '../assets/padlock.png'
 import facebook from '../assets/face.jpg'
 import instagram from '../assets/INS.jpg'
 import google from '../assets/GOOGLE.jpg'
+import axios from 'axios';
+
 const LoginForm = ({ navigation }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [userAccount, setUserAccount] = useState('');
+    const [userPassword, setUserPassword] = useState('');
     const handleLogin = () => {
-        // You can implement your login logic here
-        if (username === 'cong' && password === '123') {
-             navigation.navigate('HomePage')
-        } else if (username === 'cong' && password != '123') {
-            alert('Password is wrong!!');
-        } else if (username != 'cong' && password === '123') {
-            alert('Username is wrong!!');
-        } else {
-            alert('Username and Password are wrong!!');
-        }
+        axios.get("https://shoeshineapi.azurewebsites.net/api/user/get-all")
+            .then((response) => {
+                const user = response.data.find(i => i.userAccount === userAccount);
+                if (user) {
+                    if (user.userPassword === userPassword) {
+                        navigation.navigate('HomePage')
+                    } else {
+                        Alert.alert('Wrong password');
+                    }
+                } else {
+                    Alert.alert('Wrong account');
+                }
+            })
+            .catch((err) => console.log(err))
     };
 
     return (
@@ -35,21 +41,21 @@ const LoginForm = ({ navigation }) => {
                     <Image source={mail} style={styles.Icon} />
                     <TextInput style={styles.EmailTitle}
                         placeholder="Username"
-                        value={username}
-                        onChangeText={text => setUsername(text)}
+                        value={userAccount}
+                        onChangeText={text => setUserAccount(text)}
                     />
                 </View>
                 <View style={styles.Pass}>
                     <Image source={lock} style={styles.Icon} />
                     <TextInput style={styles.EmailTitle}
                         placeholder="Password"
-                        value={password}
+                        value={userPassword}
                         secureTextEntry
-                        onChangeText={text => setPassword(text)}
+                        onChangeText={text => setUserPassword(text)}
                     />
                 </View>
                 <View style={styles.Button}>
-                    <Button title="Login" color="blue" onPress={handleLogin}/>
+                    <Button title="Login" color="blue" onPress={handleLogin} />
                 </View>
                 <View style={styles.Vertical}>
                     <View style={{ flex: 1, height: 2, backgroundColor: 'white', marginVertical: 10 }}>
@@ -106,7 +112,7 @@ const styles = StyleSheet.create({
         height: 850,
     },
     All: {
-        alignSelf:'center'
+        alignSelf: 'center'
     },
     Email: {
         marginTop: 20,

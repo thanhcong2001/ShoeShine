@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, Image,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import acc from '../assets/account.png'
 import phone from '../assets/phone.png'
@@ -7,7 +7,7 @@ import mail1 from '../assets/mail1.png'
 import CheckBox from 'expo-checkbox'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const RegisterStore = () => {
+const RegisterStore = ({ navigation }) => {
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
     return (
         <View style={styles.Container}>
@@ -43,7 +43,7 @@ const RegisterStore = () => {
                     <TextInput style={styles.Txt} placeholder='Email Store' />
                 </View>
             </View>
-            <View style={{flexDirection:'row',marginTop:hp('5%'),alignItems:'center'}}>
+            <View style={{ flexDirection: 'row', marginTop: hp('5%'), alignItems: 'center' }}>
                 <CheckBox
                     disabled={false}
                     value={toggleCheckBox}
@@ -51,7 +51,7 @@ const RegisterStore = () => {
                 />
                 <Text style={styles.Label}>By registering, you are agreeing with our Terms of Use and Privacy Policy</Text>
             </View>
-            <View style={{marginTop:hp('5%')}}>
+            <View style={{ marginTop: hp('5%') }}>
                 <TouchableOpacity style={styles.Button} activeOpacity={0.7}>
                     <Text style={styles.Save}>Register</Text>
                 </TouchableOpacity>
@@ -88,16 +88,16 @@ const styles = StyleSheet.create({
     Txt: {
         fontSize: wp('4%'),
         marginLeft: wp('4%'),
-        color:'#C7C7C7'
+        color: '#C7C7C7'
     },
     Checkbox: {
         alignSelf: 'center',
     },
-    Label:{
-        marginLeft:wp('3%'),
-        color:'#40BFFF',
-        fontWeight:'bold',
-        fontSize:wp('4%')
+    Label: {
+        marginLeft: wp('3%'),
+        color: '#40BFFF',
+        fontWeight: 'bold',
+        fontSize: wp('4%')
     },
     Button: {
         borderWidth: 2,
