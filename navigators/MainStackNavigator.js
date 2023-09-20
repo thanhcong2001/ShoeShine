@@ -24,6 +24,7 @@ import RegisterStore from '../screens/RegisterStore'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import MyProducts from '../screens/MyProducts';
 
 //Bottom navigator
 const Tab = createBottomTabNavigator();
@@ -78,6 +79,24 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Review" component={Review} options={{ title: 'Review' }} />
       <Stack.Screen name="WriteFeed" component={WriteFeed} options={{ title: 'Write Review' }} />
       <Stack.Screen name="RegisterStore" component={RegisterStore} options={{ title: 'Register Store' }} />
+      <Stack.Screen name="MyProducts" component={MyProducts}
+        options={{
+          headerTitle: () => (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ fontSize: wp('5%') }}>My Products</Text>
+              <TouchableOpacity>
+                <Image
+                  source={require('../assets/loupe.png')} // Thay bằng đường dẫn tới icon search
+                  style={{
+                    width: wp('5.2%'),
+                    height: hp('2.5%'), marginLeft: wp('30%')
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          )
+        }}
+      />
       <Stack.Screen name="Payment" component={Payment} options={{ title: 'Payment' }} />
     </Stack.Navigator>
   );

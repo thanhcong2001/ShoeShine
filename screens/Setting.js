@@ -56,6 +56,14 @@ const Setting = ({ navigation }) => {
           <Text style={styles.Title}>Register Store</Text>
         </View>
       </TouchableOpacity>
+      <TouchableOpacity onPress={()=>{
+        navigation.navigate('MyProducts')
+      }}>
+        <View style={styles.Account}>
+          <Image source={shop} style={styles.Image} />
+          <Text style={styles.Title}>My Products</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }
