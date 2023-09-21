@@ -3,7 +3,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 const endComponent = () => {
     return (
-        <View style={{ alignItems: 'center', width: wp('100%') }}>
+        <View style={{ alignItems: 'center', width: wp('100%'), paddingTop: hp('1%') }}>
             <Text style={{ color: '#8b8b8b' }}> End Screen Reached</Text>
         </View>
     );
@@ -34,7 +34,7 @@ const MyProducts = () => {
         {
             id: '2', name: 'Shoes Nike A93 Type Street', image: require('../assets/myshoes2.png'),
             price: 100000, inStore: 2, sold: 0, like: 0, view: 0
-        },
+        }
     ];
 
     const renderProductItem = ({ item }) => (
@@ -87,22 +87,26 @@ const MyProducts = () => {
     return (
         <View style={styles.Container}>
             <SafeAreaView style={{ flex: 9 }}>
-                <FlatList
-                    data={status}
-                    keyExtractor={item => item.id}
-                    renderItem={renderStatusItem}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.StatusList}
-                />
-                <FlatList
-                    data={product}
-                    keyExtractor={item => item.id}
-                    renderItem={renderProductItem}
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.ProductList}
-                    ListFooterComponent={endComponent}
-                />
+                <View>
+                    <FlatList
+                        data={status}
+                        keyExtractor={item => item.id}
+                        renderItem={renderStatusItem}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.StatusList}
+                    />
+                </View>
+                <View>
+                    <FlatList
+                        data={product}
+                        keyExtractor={item => item.id}
+                        renderItem={renderProductItem}
+                        showsHorizontalScrollIndicator={true}
+                        contentContainerStyle={styles.ProductList}
+                        ListFooterComponent={endComponent}
+                    />
+                </View>
             </SafeAreaView>
             <View style={{ flex: 1 }}>
                 <TouchableOpacity style={styles.Button} activeOpacity={0.7}>
@@ -130,7 +134,7 @@ const styles = StyleSheet.create({
     },
     ProductList: {
         width: wp('100%'),
-        heught: hp('70%')
+        paddingBottom: hp('10%')
     },
     RenderProductContainer: {
         paddingLeft: wp('3%'),
