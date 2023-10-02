@@ -9,7 +9,7 @@ import StoreDetails from '../screens/StoreDetails'
 import StoreNearYou from '../screens/StoreNearYou'
 import Profile from '../screens/Profile'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Cart from '../screens/Cart'
+import Shipping from '../screens/Shipping'
 import UpdateName from '../screens/UpdateName'
 import Explore from '../screens/Explore'
 import Setting from '../screens/Setting'
@@ -21,6 +21,7 @@ import Review from '../screens/Review'
 import WriteFeed from '../screens/WriteFeed'
 import Payment from '../screens/Payment'
 import RegisterStore from '../screens/RegisterStore'
+import Cart from '../screens/Cart'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -35,7 +36,7 @@ function MyTabs() {
         tabBarIcon: ({ color }) => <Icon name="search" size={wp('7%')} color={color} />, headerShown: false
       }} />
       <Tab.Screen name="Cart" component={Cart} options={{
-        tabBarIcon: ({ color }) => <Icon name="shopping-cart" size={wp('7%')} color={color} />,
+        tabBarIcon: ({ color }) => <Icon name="shopping-cart" size={wp('7%')} color={color} />, headerShown: false
       }} />
       <Tab.Screen name="Account" component={Setting} options={{
         tabBarIcon: ({ color }) => <Icon name="user" size={wp('7%')} color={color} />,
@@ -79,6 +80,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="WriteFeed" component={WriteFeed} options={{ title: 'Write Review' }} />
       <Stack.Screen name="RegisterStore" component={RegisterStore} options={{ title: 'Register Store' }} />
       <Stack.Screen name="Payment" component={Payment} options={{ title: 'Payment' }} />
+      <Stack.Screen name="Shipping" component={Shipping} options={{ title: 'Booking Service' }} />
     </Stack.Navigator>
   );
 };

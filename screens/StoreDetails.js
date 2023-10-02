@@ -1,35 +1,45 @@
 import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity, FlatList, ScrollView, Button } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import heart from '../assets/heart.png'
 import vu from '../assets/vu.jpg'
 import rating1 from '../assets/rating1.png'
 const StoreDetails = ({ route, navigation }) => {
   const { storeImage, storeName, Distance } = route.params;
-  const TypeOfShoes = [
-    { id: '1', type: 'Leather Shoes' },
-    { id: '2', type: 'Sport Shoes' },
-    { id: '3', type: 'Western Shoes' },
-    { id: '4', type: 'Work boots' },
-    { id: '5', type: 'Running shoes' },
-  ];
+  const [data, setData] = useState([]);
+  const [service, setService] = useState([]);
+
+  useEffect(() => {
+    fetchDataFromApi();
+    fetchService();
+  }, []);
+
+  const fetchDataFromApi = async () => {
+    try {
+      const response = await axios.get('https://shoeshineapi.azurewebsites.net/api/categorys/get-all');
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   const renderTypeItem = ({ item }) => (
     <TouchableOpacity style={styles.Circle}>
-      <Text style={{ fontWeight: 'bold', color: '#223263' }}>{item.type}</Text>
+      <Text style={{ fontWeight: 'bold', color: '#223263' }}>{item.categoryName}</Text>
     </TouchableOpacity>
   );
 
-  const ServiceOfShoes = [
-    { id: '1', type: 'Standard Hygiene' },
-    { id: '2', type: 'Yellow Stain Remover' },
-    { id: '3', type: 'Shoe Restoration' },
-    { id: '4', type: 'Deep Undersole Detail' },
-    { id: '5', type: 'Lace Removal & Cleaning' },
-
-  ];
+  const fetchService = async () => {
+    try {
+      const response = await axios.get('https://shoeshineapi.azurewebsites.net/api/services/get-all');
+      setService(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   const renderServiceItem = ({ item }) => (
     <TouchableOpacity style={styles.Circle}>
-      <Text style={{ fontWeight: 'bold', color: '#223263' }}>{item.type}</Text>
+      <Text style={{ fontWeight: 'bold', color: '#223263' }}>{item.serviceName}</Text>
     </TouchableOpacity>
   );
 
@@ -98,12 +108,12 @@ const StoreDetails = ({ route, navigation }) => {
         </View>
         <View>
           <FlatList
-            data={TypeOfShoes}
-            keyExtractor={item => item.id}
+            data={data}
+            keyExtractor={item => item.categoryId.toString()}
             renderItem={renderTypeItem}
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.TypeList}
+            contentContainerStyle={styles.StoreList}
           />
         </View>
         <View>
@@ -111,8 +121,8 @@ const StoreDetails = ({ route, navigation }) => {
         </View>
         <View>
           <FlatList
-            data={ServiceOfShoes}
-            keyExtractor={item => item.id}
+            data={service}
+            keyExtractor={item => item.serviceId}
             renderItem={renderServiceItem}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -181,7 +191,9 @@ const StoreDetails = ({ route, navigation }) => {
           />
         </View>
         <View>
-          <TouchableOpacity style={styles.Button} activeOpacity={0.7}>
+          <TouchableOpacity style={styles.Button} activeOpacity={0.7} onPress={()=>{
+            navigation.navigate('Shipping')
+          }}>
             <Text style={styles.Txt}>Booking Service</Text>
           </TouchableOpacity>
         </View>
@@ -215,14 +227,14 @@ const styles = StyleSheet.create({
   },
   Circle: {
     flex: 1,
-    width: wp('38%'),
+    width: wp('41s%'),
     height: hp('8%'),
     borderRadius: 30,
     borderWidth: 2,
     borderColor: '#1A2F6E',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: wp('2%')
+    marginRight: wp('2%'),
   },
   TypeList: {
     marginTop: hp('2%'),
@@ -308,8 +320,8 @@ const styles = StyleSheet.create({
     borderColor: '#EBF0FF',
     marginLeft: wp('6%'),
     backgroundColor: '#40BFFF',
-    marginRight:wp('2%')
-  },  
+    marginRight: wp('2%')
+  },
   Txt: {
     alignSelf: 'center',
     marginTop: hp('1.7%'),
