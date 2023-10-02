@@ -24,6 +24,7 @@ import RegisterStore from '../screens/RegisterStore'
 import Cart from '../screens/Cart'
 import Store from '../screens/Store'
 
+import AddProduct from '../screens/AddProduct'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -103,7 +104,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Payment" component={Payment} options={{ title: 'Payment' }} />
       <Stack.Screen name="Shipping" component={Shipping} options={{ title: 'Booking Service' }} />
       <Stack.Screen name="Store" component={Store} options={{ title: 'Store' }} />
-
+      <Stack.Screen name="AddProduct" component={AddProduct} options={{ title: 'Add Product' }} />
     </Stack.Navigator>
   );
 };

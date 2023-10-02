@@ -6,7 +6,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 const endComponent = () => {
     return (
         <View style={{ alignItems: 'center', width: wp('100%'), paddingTop: hp('1%') }}>
-            <Text style={{ color: '#8b8b8b' }}> End Screen Reached</Text>
+            <Text style={{ color: '#8b8b8b' }}>End Screen Reached</Text>
         </View>
     );
 };
@@ -19,7 +19,7 @@ const emptyComponent = () => {
     );
 };
 
-const MyProducts = () => {
+const MyProducts = ({ navigation }) => {
     //Status list
     const status = [
         { id: '1', name: 'Available', count: 16 },
@@ -167,7 +167,7 @@ const MyProducts = () => {
                 }
             </SafeAreaView>
             <View style={{ flex: 1 }}>
-                <TouchableOpacity style={styles.Button} activeOpacity={0.7}>
+                <TouchableOpacity onPress={() => navigation.navigate('AddProduct')} style={styles.Button} activeOpacity={0.7}>
                     <Text style={styles.Txt}>Add product</Text>
                 </TouchableOpacity>
             </View>
