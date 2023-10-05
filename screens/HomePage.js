@@ -51,7 +51,7 @@ const HomePage = ({ navigation }) => {
   ];
   const renderStoreRecommemed = ({ item }) => (
     <TouchableOpacity style={styles.Recommended} onPress={() => {
-      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image })
+      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image, Distance: item.distance })
     }}>
       <Image source={item.image} style={styles.ImageStore} />
       <Text style={styles.StoreName}>{item.name}</Text>

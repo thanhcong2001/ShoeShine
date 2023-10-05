@@ -40,7 +40,21 @@ function MyTabs() {
         tabBarIcon: ({ color }) => <Icon name="search" size={wp('7%')} color={color} />, headerShown: false
       }} />
       <Tab.Screen name="Cart" component={Cart} options={{
-        tabBarIcon: ({ color }) => <Icon name="shopping-cart" size={wp('7%')} color={color} />, headerShown: false
+        tabBarIcon: ({ color }) => <Icon name="shopping-cart" size={wp('7%')} color={color} />,
+        headerTitle: () => (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: wp('5%'), letterSpacing: 1, marginLeft: wp('20%'), fontWeight: 'bold', color: '#223263' }}>Your Shopping Cart</Text>
+            <TouchableOpacity>
+              <Image
+                source={require('../assets/loupe.png')} // Thay bằng đường dẫn tới icon search
+                style={{
+                  width: wp('5.2%'),
+                  height: hp('2.5%'), marginLeft: wp('15%')
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+        )
       }} />
       <Tab.Screen name="Account" component={Setting} options={{
         tabBarIcon: ({ color }) => <Icon name="user" size={wp('7%')} color={color} />,
