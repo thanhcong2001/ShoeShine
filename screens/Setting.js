@@ -54,7 +54,7 @@ const Setting = ({ navigation }) => {
       <TouchableOpacity
         onPress={() => {
           // navigation.navigate('RegisterStore')
-          navigation.navigate("Store");
+          navigation.navigate("RegisterStore");
         }}
       >
         <View style={styles.Account}>
@@ -63,11 +63,11 @@ const Setting = ({ navigation }) => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>{
-        navigation.navigate('MyProducts')
+        navigation.navigate('Store')
       }}>
         <View style={styles.Account}>
           <Image source={shop} style={styles.Image} />
-          <Text style={styles.Title}>My Products</Text>
+          <Text style={styles.Title}>My Store</Text>
         </View>
       </TouchableOpacity>
     </View>

@@ -1,4 +1,4 @@
-import { View, Text, Image, SafeAreaView, StyleSheet, Button, FlatList } from "react-native";
+import { View, Text, Image, SafeAreaView, StyleSheet, Button, FlatList, TouchableOpacity } from "react-native";
 import copyLogo from "../assets/copyLogo.png";
 import banner from "../assets/banner.png";
 import React from "react";
@@ -44,7 +44,7 @@ const Item = ({ task }) => (
   </View>
 );
 
-export default function Store() {
+export default function Store({navigation}) {
   return (
     <View style={styles.Container}>
       <View style={styles.Header}>
@@ -110,12 +110,12 @@ export default function Store() {
       <View style={{ gap: wp("8%"), backgroundColor: "white", padding: wp("4%"), marginTop: hp("0.8%"), flex: 3 }}>
         {/*  */}
         <View style={{ flexDirection: "row" }}>
-          <View style={{ alignItems: "center", justifyContent: "center", flex: 1, gap: hp("1.2%") }}>
+          <TouchableOpacity style={{ alignItems: "center", justifyContent: "center", flex: 1, gap: hp("1.2%") }} onPress={() => navigation.navigate('MyProducts')}>
             <View style={{ width: 32, height: 32 }}>
               <Image source={box} style={styles.Icon} />
             </View>
             <Text style={{ color: "#B3B3B3" }}>Sản phẩm của tôi</Text>
-          </View>
+          </TouchableOpacity>
           <View style={{ alignItems: "center", justifyContent: "center", flex: 1, gap: hp("1.2%") }}>
             <View style={{ width: 32, height: 32 }}>
               <Image source={wallet} style={styles.Icon} />

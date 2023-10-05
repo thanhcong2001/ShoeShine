@@ -2,7 +2,8 @@ import { Button, TouchableOpacity, StyleSheet, Text, View, TextInput } from 'rea
 import React, { useState, useEffect } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const Shipping = () => {
+const Shipping = ({navigation,route}) => {
+  const { options,services} = route.params;
   const [isEditable, setIsEditable] = useState(false);
   const handleEditPress = () => {
     setIsEditable(true);
@@ -25,7 +26,7 @@ const Shipping = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.BorderBring}>
-          <TouchableOpacity activeOpacity={0.5}>
+          <TouchableOpacity activeOpacity={0.5} onPress={()=>{navigation.navigate('Cart',{options,services})}}>
             <Text style={styles.Ship}>Bring To The Store</Text>
             <Text style={styles.Contact}>You Bring Your Own Shoes To The Store</Text>
           </TouchableOpacity>

@@ -9,7 +9,23 @@ const StoreDetails = ({ route, navigation }) => {
   const { storeImage, storeName, Distance } = route.params;
   const [data, setData] = useState([]);
   const [service, setService] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedService, setSelectedService] = useState([]);
 
+  const toggleOption = (categoryId) => {
+    if (selectedOptions.includes(categoryId)) {
+      setSelectedOptions(selectedOptions.filter(id => id !== categoryId));
+    } else {
+      setSelectedOptions([...selectedOptions, categoryId]);
+    }
+  };
+  const toggleService = (serviceId) => {
+    if (selectedService.includes(serviceId)) {
+      setSelectedService(selectedService.filter(id => id !== serviceId));
+    } else {
+      setSelectedService([...selectedService, serviceId]);
+    }
+  };
   useEffect(() => {
     fetchDataFromApi();
     fetchService();
@@ -24,7 +40,13 @@ const StoreDetails = ({ route, navigation }) => {
     }
   };
   const renderTypeItem = ({ item }) => (
-    <TouchableOpacity style={styles.Circle}>
+    <TouchableOpacity
+      style={[
+        styles.Circle,
+        { backgroundColor: selectedOptions.includes(item.categoryId) ? '#40BFFF' : 'white' }
+      ]}
+      onPress={() => toggleOption(item.categoryId)}
+    >
       <Text style={{ fontWeight: 'bold', color: '#223263' }}>{item.categoryName}</Text>
     </TouchableOpacity>
   );
@@ -38,7 +60,13 @@ const StoreDetails = ({ route, navigation }) => {
     }
   };
   const renderServiceItem = ({ item }) => (
-    <TouchableOpacity style={styles.Circle}>
+    <TouchableOpacity
+      style={[
+        styles.Circle,
+        { backgroundColor: selectedService.includes(item.serviceId) ? '#40BFFF' : 'white' }
+      ]}
+      onPress={() => toggleService(item.serviceId)}
+    >
       <Text style={{ fontWeight: 'bold', color: '#223263' }}>{item.serviceName}</Text>
     </TouchableOpacity>
   );
@@ -191,8 +219,8 @@ const StoreDetails = ({ route, navigation }) => {
           />
         </View>
         <View>
-          <TouchableOpacity style={styles.Button} activeOpacity={0.7} onPress={()=>{
-            navigation.navigate('Shipping')
+          <TouchableOpacity style={styles.Button} activeOpacity={0.7} onPress={() => {
+            navigation.navigate('Shipping', { options: selectedOptions, services: selectedService })
           }}>
             <Text style={styles.Txt}>Booking Service</Text>
           </TouchableOpacity>
