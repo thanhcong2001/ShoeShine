@@ -43,7 +43,7 @@ function MyTabs() {
         tabBarIcon: ({ color }) => <Icon name="shopping-cart" size={wp('7%')} color={color} />,
         headerTitle: () => (
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: wp('5%'), letterSpacing: 1, marginLeft: wp('20%'), fontWeight: 'bold', color: '#223263' }}>Your Shopping Cart</Text>
+            <Text style={{ fontSize: wp('5%'), letterSpacing: wp('0.1%'), marginLeft: wp('20%'), fontWeight: 'bold', color: '#223263' }}>Your Shopping Cart</Text>
             <TouchableOpacity>
               <Image
                 source={require('../assets/loupe.png')} // Thay bằng đường dẫn tới icon search
