@@ -4,7 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import sportProduct from '../assets/sportShoe1.jpg'
 import trash from '../assets/delete.png'
 
-const Cart = () => {
+const Cart = ({navigation}) => {
   const [quantity, setQuantity] = useState(1);
   const [quantity1, setQuantity1] = useState(1);
 
@@ -106,7 +106,7 @@ const Cart = () => {
         </View>
       </View>
       <View>
-        <TouchableOpacity style={styles.NextButton}>
+        <TouchableOpacity style={styles.NextButton} onPress={()=>{navigation.navigate('Payment')}}>
           <Text style={{marginLeft:wp('35%'),marginTop:hp('0.5%'),color:'white',fontSize:wp('4.5%'),fontWeight:'bold'}}>Next</Text>
         </TouchableOpacity>
       </View>
