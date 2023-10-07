@@ -8,22 +8,27 @@ import facebook from '../assets/face.jpg'
 import instagram from '../assets/INS.jpg'
 import google from '../assets/GOOGLE.jpg'
 import back from '../assets/shoe.jpg'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
-
+import jwtDecode from 'jwt-decode';
 const LoginForm = ({ navigation }) => {
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
+
     const handleLogin = () => {
         const data = { email: userEmail, password: userPassword }
         axios.post(`https://shoeshineapi.azurewebsites.net/api/users/login?email=${userEmail}&password=${userPassword}`, data)
-            .then((response) => {
+            .then(async (response) => {
                 if (response.status === 200) {
-                    // Đăng ký thành công, bạn có thể điều hướng đến màn hình khác
+                    const token = response.data;
+                    await AsyncStorage.setItem('userToken', token);
+                    const decodedToken = jwtDecode(token);
+                    const userId = decodedToken.UserId;
                     navigation.navigate('HomePage');
+                    console.log('userId:', userId);
                 } else {
-                    Alert.alert('Đăng ký thất bại');
+                    Alert.alert('Đăng nhập thất bại');
                 }
             })
             .catch((err) => console.log(err))

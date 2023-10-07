@@ -6,11 +6,13 @@ import heart from '../assets/heart.png'
 import vu from '../assets/vu.jpg'
 import rating1 from '../assets/rating1.png'
 const StoreDetails = ({ route, navigation }) => {
-  const { storeImage, storeName, Distance } = route.params;
+  const { storeImage, storeName, Distance, Id } = route.params;
+  console.log(Id);
   const [data, setData] = useState([]);
   const [service, setService] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [selectedService, setSelectedService] = useState([]);
+  const [selectedService, setSelectedService] = useState('');
+
 
   const toggleOption = (categoryId) => {
     if (selectedOptions.includes(categoryId)) {
@@ -20,11 +22,12 @@ const StoreDetails = ({ route, navigation }) => {
     }
   };
   const toggleService = (serviceId) => {
-    if (selectedService.includes(serviceId)) {
-      setSelectedService(selectedService.filter(id => id !== serviceId));
-    } else {
-      setSelectedService([...selectedService, serviceId]);
-    }
+    // if (selectedService.includes(serviceId)) {
+    //   setSelectedService(selectedService.filter(id => id !== serviceId));
+    // } else {
+    //   setSelectedService([...selectedService, serviceId]);
+    // }
+    setSelectedService(serviceId)
   };
   useEffect(() => {
     fetchDataFromApi();
@@ -63,7 +66,7 @@ const StoreDetails = ({ route, navigation }) => {
     <TouchableOpacity
       style={[
         styles.Circle,
-        { backgroundColor: selectedService.includes(item.serviceId) ? '#40BFFF' : 'white' }
+        { backgroundColor: selectedService === item.serviceId ? '#40BFFF' : 'white' }
       ]}
       onPress={() => toggleService(item.serviceId)}
     >
@@ -110,6 +113,20 @@ const StoreDetails = ({ route, navigation }) => {
       <Text style={styles.StoreLocation}>{item.location}</Text>
     </TouchableOpacity>
   );
+
+  const onBooking = () => {
+    var dataToSend = {
+      "serviceId": selectedService,
+      "storeId": Id,
+      "categoryIdArray": selectedOptions
+    }
+    axios.post('https://shoeshineapi.azurewebsites.net/api/bookings', dataToSend)
+      .then((response) => {
+        if (response.status === 200) {
+          navigation.navigate('Shipping')
+        }
+      })
+  }
 
   return (
     <View style={styles.All}>
@@ -219,9 +236,7 @@ const StoreDetails = ({ route, navigation }) => {
           />
         </View>
         <View>
-          <TouchableOpacity style={styles.Button} activeOpacity={0.7} onPress={() => {
-            navigation.navigate('Shipping', { options: selectedOptions, services: selectedService })
-          }}>
+          <TouchableOpacity style={styles.Button} activeOpacity={0.7} onPress={onBooking}>
             <Text style={styles.Txt}>Booking Service</Text>
           </TouchableOpacity>
         </View>

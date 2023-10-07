@@ -17,19 +17,19 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 const HomePage = ({ navigation }) => {
   //Store near you
   const storeNear = [
-    { id: '1', name: 'Shoes Health', distance: '500m', image: require('../assets/laudary.jpg') },
-    { id: '2', name: 'Cosmo Store', distance: '700m', image: require('../assets/cosmo.jpg') },
-    { id: '3', name: 'DuboShop', distance: '1km', image: require('../assets/dubo.jpg') },
-    { id: '4', name: 'Shoes Health', distance: '1.5km', image: require('../assets/laudary.jpg') },
-    { id: '5', name: 'Shoes Health', distance: '500m', image: require('../assets/laudary.jpg') },
-    { id: '6', name: 'Cosmo Store', distance: '700m', image: require('../assets/cosmo.jpg') },
+    { id: '7', name: 'Shoes Health', distance: '500m', image: require('../assets/laudary.jpg') },
+    { id: '8', name: 'Cosmo Store', distance: '700m', image: require('../assets/cosmo.jpg') },
+    { id: '9', name: 'DuboShop', distance: '1km', image: require('../assets/dubo.jpg') },
+    { id: '10', name: 'Shoes Health', distance: '1.5km', image: require('../assets/laudary.jpg') },
+    { id: '11', name: 'Shoes Health', distance: '500m', image: require('../assets/laudary.jpg') },
+    { id: '14', name: 'Cosmo Store', distance: '700m', image: require('../assets/cosmo.jpg') },
   ];
   const numberOfItems = 4; // Render component number
   const limitedStoreNear = storeNear.slice(0, numberOfItems);
   const renderStoreItem = ({ item }) => (
 
     <TouchableOpacity style={styles.Store} onPress={() => {
-      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image, Distance: item.distance})
+      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image, Distance: item.distance, Id: item.id})
     }}>
       <Image source={item.image} style={styles.ImageStore} />
       <Image style={{width:wp('20%'),height:hp('2.2%')}} source={rating1}/>
@@ -39,19 +39,19 @@ const HomePage = ({ navigation }) => {
   );
   // Recommended Store
   const storeRecommemed = [
-    { id: '1', name: 'Store Mr.Phui', distance: '1.2km', location: 'District 8', image: require('../assets/Phui.jpg')},
-    { id: '2', name: 'BB Cleaning', distance: '4km', location: 'District 3', image: require('../assets/BBCleaning.jpg') },
-    { id: '3', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg')},
-    { id: '4', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Buzz.jpg')},
-    { id: '5', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/xClean.jpg')},
-    { id: '6', name: 'Store DR.Thong', distance: '5km', location: 'Thu Duc City', image: require('../assets/DrThong.jpg') },
+    { id: '7', name: 'Store Mr.Phui', distance: '1.2km', location: 'District 8', image: require('../assets/Phui.jpg')},
+    { id: '8', name: 'BB Cleaning', distance: '4km', location: 'District 3', image: require('../assets/BBCleaning.jpg') },
+    { id: '9', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg')},
+    { id: '10', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Buzz.jpg')},
+    { id: '11', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/xClean.jpg')},
+    { id: '14', name: 'Store DR.Thong', distance: '5km', location: 'Thu Duc City', image: require('../assets/DrThong.jpg') },
     { id: '7', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/Phui.jpg') },
     { id: '8', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Phui.jpg') },
     { id: '9', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/Phui.jpg')},
   ];
   const renderStoreRecommemed = ({ item }) => (
     <TouchableOpacity style={styles.Recommended} onPress={() => {
-      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image, Distance: item.distance })
+      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image, Distance: item.distance, Id: item.id })
     }}>
       <Image source={item.image} style={styles.ImageStore} />
       <Text style={styles.StoreName}>{item.name}</Text>
