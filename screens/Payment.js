@@ -10,11 +10,20 @@ import axios from 'axios';
 const Payment = ({ navigation }) => {
     const [data, setData] = useState([]);
     const [filteredOrders, setFilteredOrders] = useState([]);
-
+    const [momoAppURI, setMomoAppURI] = useState('');
     useEffect(() => {
-        setTimeout(() => {
+        // Ban đầu, fetch dữ liệu và sau đó thiết lập một interval cho việc làm mới
+        getMomo();
+
+        const refreshInterval = setInterval(() => {
+            // Làm mới dữ liệu bằng cách gọi lại fetchData
             getMomo();
-        }, 2800);
+        }, 1000); // Làm mới mỗi 60 giây (1 phút)  
+
+        // Trả về một hàm để xóa interval khi component bị unmount
+        return () => {
+            clearInterval(refreshInterval);
+        };
     }, []);
 
     const getMomo = async () => {
@@ -26,7 +35,7 @@ const Payment = ({ navigation }) => {
                 const lastOrder = orders[orders.length - 1];
                 const lastOrderIsOrderStatus = lastOrder.isOrderStatus;
                 if (lastOrderIsOrderStatus === 1) {
-                    navigation.navigate("WriteFeed")
+                    navigation.navigate("Success")
                 } else {
                     console.log('isOrderStatus của phần tử cuối cùng không phải là 0.');
                 }
@@ -38,8 +47,13 @@ const Payment = ({ navigation }) => {
     const [isPressed, setIsPressed] = useState(false);
     // const [isPressed1, setIsPressed1] = useState(false);
     // const [isPressed2, setIsPressed2] = useState(false);
-    const momo = () => {
-        const momoAppURI = 'https://test-payment.momo.vn/gateway/pay?t=TU9NT0JLVU4yMDE4MDUyOXxTU04tMjM&s=f9a28d1d5885c68cc3e682b7be48888e0deb44d3f0509b6b807f531a36feb97b';
+    const momo = async () => {
+        try {
+            const response = await axios.get('https://shoeshineapi.azurewebsites.net/api/payments/momo');
+            setMomoAppURI(response.data);
+        } catch (error) {
+            // console.error('Error fetching data:', error);
+        }
         Linking.canOpenURL(momoAppURI)
             .then(supported => {
                 if (supported) {

@@ -38,7 +38,7 @@ export default function App() {
             <View style={styles.Input}>
                 <View style={styles.InputTitle}>
                     <View style={{ marginBottom: wp('2%') }}>
-                        <Text>Product Name <Text style={{ color: 'red' }}>*</Text></Text>
+                        <Text>Type Of Shoes <Text style={{ color: 'red' }}>*</Text></Text>
                     </View>
                     <View style={styles.InputTitleLength}>
                         <Text>{productName.length}/120</Text>
@@ -56,7 +56,7 @@ export default function App() {
             <View style={styles.Input}>
                 <View style={styles.InputTitle}>
                     <View style={{ marginBottom: wp('2%') }}>
-                        <Text>Product Detail <Text style={{ color: 'red' }}>*</Text></Text>
+                        <Text>Store Service <Text style={{ color: 'red' }}>*</Text></Text>
                     </View>
                     <View style={styles.InputTitleLength}>
                         <Text>{productDetail.length}/3000</Text>

@@ -7,14 +7,14 @@ import vu from '../assets/vu.jpg'
 import rating1 from '../assets/rating1.png'
 const StoreDetails = ({ route, navigation }) => {
   const { storeImage, storeName, Distance, Id } = route.params;
-  console.log(Id);
   const [data, setData] = useState([]);
   const [service, setService] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [selectedService, setSelectedService] = useState('');
+  const [price, setPrice] = useState('');
 
 
-  const toggleOption = (categoryId) => {
+  const toggleOption = (categoryId) => { 
     if (selectedOptions.includes(categoryId)) {
       setSelectedOptions(selectedOptions.filter(id => id !== categoryId));
     } else {
@@ -22,11 +22,8 @@ const StoreDetails = ({ route, navigation }) => {
     }
   };
   const toggleService = (serviceId) => {
-    // if (selectedService.includes(serviceId)) {
-    //   setSelectedService(selectedService.filter(id => id !== serviceId));
-    // } else {
-    //   setSelectedService([...selectedService, serviceId]);
-    // }
+    const curService = service.find(i => (i.serviceId == serviceId))
+    setPrice(curService.servicePrice)
     setSelectedService(serviceId)
   };
   useEffect(() => {
@@ -53,7 +50,7 @@ const StoreDetails = ({ route, navigation }) => {
       <Text style={{ fontWeight: 'bold', color: '#223263' }}>{item.categoryName}</Text>
     </TouchableOpacity>
   );
-
+ 
   const fetchService = async () => {
     try {
       const response = await axios.get('https://shoeshineapi.azurewebsites.net/api/services/get-all');
@@ -113,12 +110,12 @@ const StoreDetails = ({ route, navigation }) => {
       <Text style={styles.StoreLocation}>{item.location}</Text>
     </TouchableOpacity>
   );
-
-  const onBooking = () => {
+ 
+  const onBooking = () => {  
     var dataToSend = {
       "serviceId": selectedService,
       "storeId": Id,
-      "categoryIdArray": selectedOptions
+      "categoryIdArray": selectedOptions  
     }
     axios.post('https://shoeshineapi.azurewebsites.net/api/bookings', dataToSend)
       .then((response) => {

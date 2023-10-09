@@ -90,7 +90,7 @@ const RegisterStore = ({ navigation }) => {
                 <Text style={styles.Label}>By registering, you are agreeing with our Terms of Use and Privacy Policy</Text>
             </View>
             <View style={{ marginTop: hp('5%') }}>
-                <TouchableOpacity style={styles.Button} activeOpacity={0.7} onPress={handleRegisterStore}>
+                <TouchableOpacity style={styles.Button} activeOpacity={0.7} onPress={()=>{navigation.navigate('Store')}}>
                     <Text style={styles.Save}>Register</Text>
                 </TouchableOpacity>
             </View>

@@ -29,19 +29,19 @@ const Setting = ({ navigation }) => {
           <Text style={styles.Title}>Order</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
         <View style={styles.Account}>
           <Image source={appointment} style={styles.Image} />
           <Text style={styles.Title}>Booking Service</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity>
         <View style={styles.Account}>
           <Image source={location} style={styles.Image} />
           <Text style={styles.Title}>Address</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => {
           navigation.navigate("Payment");
         }}
@@ -50,7 +50,7 @@ const Setting = ({ navigation }) => {
           <Image source={creditCard} style={styles.Image} />
           <Text style={styles.Title}>Payment</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         onPress={() => {
           // navigation.navigate('RegisterStore')
@@ -62,14 +62,14 @@ const Setting = ({ navigation }) => {
           <Text style={styles.Title}>Register Store</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=>{
+      {/* <TouchableOpacity onPress={()=>{
         navigation.navigate('Store')
       }}>
         <View style={styles.Account}>
           <Image source={shop} style={styles.Image} />
           <Text style={styles.Title}>My Store</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

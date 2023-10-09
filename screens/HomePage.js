@@ -5,14 +5,16 @@ import heart from '../assets/heart.png'
 import notification from '../assets/notification.png'
 import cleaning from '../assets/washing.jpg'
 import Countdown from 'react-native-countdown-component';
-import ticket from '../assets/ticket.png'
-import report from '../assets/report.png'
+import task from '../assets/task.png'
 import facebook from '../assets/facebook.png'
-import call from '../assets/call.png'
+import phone1 from '../assets/phone1.png'
 import googleMap from '../assets/googleMap.jpg'
 import store from '../assets/store.jpg'
-import rating from '../assets/rating.png'
 import rating1 from '../assets/rating1.png'
+import ve from '../assets/ve.png'
+import fb2 from '../assets/fb2.png'
+
+
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 const HomePage = ({ navigation }) => {
   //Store near you
@@ -29,25 +31,25 @@ const HomePage = ({ navigation }) => {
   const renderStoreItem = ({ item }) => (
 
     <TouchableOpacity style={styles.Store} onPress={() => {
-      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image, Distance: item.distance, Id: item.id})
+      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image, Distance: item.distance, Id: item.id })
     }}>
       <Image source={item.image} style={styles.ImageStore} />
-      <Image style={{width:wp('20%'),height:hp('2.2%')}} source={rating1}/>
+      <Image style={{ width: wp('20%'), height: hp('2.2%') }} source={rating1} />
       <Text style={styles.StoreName}>{item.name}</Text>
       <Text style={styles.StoreLocation}>{item.distance}</Text>
     </TouchableOpacity>
   );
   // Recommended Store
   const storeRecommemed = [
-    { id: '7', name: 'Store Mr.Phui', distance: '1.2km', location: 'District 8', image: require('../assets/Phui.jpg')},
+    { id: '7', name: 'Store Mr.Phui', distance: '1.2km', location: 'District 8', image: require('../assets/Phui.jpg') },
     { id: '8', name: 'BB Cleaning', distance: '4km', location: 'District 3', image: require('../assets/BBCleaning.jpg') },
-    { id: '9', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg')},
-    { id: '10', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Buzz.jpg')},
-    { id: '11', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/xClean.jpg')},
+    { id: '9', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg') },
+    { id: '10', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Buzz.jpg') },
+    { id: '11', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/xClean.jpg') },
     { id: '14', name: 'Store DR.Thong', distance: '5km', location: 'Thu Duc City', image: require('../assets/DrThong.jpg') },
     { id: '7', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/Phui.jpg') },
     { id: '8', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Phui.jpg') },
-    { id: '9', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/Phui.jpg')},
+    { id: '9', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/Phui.jpg') },
   ];
   const renderStoreRecommemed = ({ item }) => (
     <TouchableOpacity style={styles.Recommended} onPress={() => {
@@ -55,7 +57,7 @@ const HomePage = ({ navigation }) => {
     }}>
       <Image source={item.image} style={styles.ImageStore} />
       <Text style={styles.StoreName}>{item.name}</Text>
-      <Image style={{width:wp('20%'),height:hp('1.8%')}} source={rating1}/>
+      <Image style={{ width: wp('20%'), height: hp('1.8%') }} source={rating1} />
       <Text style={styles.StoreLocation}>{item.distance}</Text>
       <Text style={styles.StoreLocation}>{item.location}</Text>
     </TouchableOpacity>
@@ -122,25 +124,25 @@ const HomePage = ({ navigation }) => {
         <View style={styles.EventList}>
           <TouchableOpacity>
             <View style={styles.Circle}>
-              <Image source={ticket} style={styles.EventIcon} />
+              <Image source={ve} style={styles.EventIcon} />
             </View>
             <Text style={{ textAlign: 'center' }}>Voucher</Text>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.Circle}>
-              <Image source={report} style={styles.EventIcon} />
+              <Image source={task} style={styles.EventIcon} />
             </View>
             <Text style={{ textAlign: 'center' }}>Attend</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View style={styles.Circle}>
-              <Image source={facebook} style={styles.EventIcon} />
+            <View >
+              <Image source={fb2} style={{ width: wp('16.8%'), height: hp('8%') }} />
             </View>
             <Text style={{ textAlign: 'center' }}>Fanpage</Text>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.Circle}>
-              <Image source={call} style={styles.EventIcon} />
+              <Image source={phone1} style={styles.EventIcon} />
             </View>
             <Text style={{ textAlign: 'center' }}>Contact</Text>
           </TouchableOpacity>
@@ -246,7 +248,7 @@ const styles = StyleSheet.create({
     marginLeft: wp('2%'),
   },
   CleaningPic: {
-    marginRight:wp('1%'),
+    marginRight: wp('1%'),
     marginTop: hp('2.6%'),
     marginLeft: wp('1.5%'),
     width: wp('90%'),
@@ -269,7 +271,7 @@ const styles = StyleSheet.create({
   EventList: {
     marginTop: hp('2%'),
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   EventTitle: {
     flexDirection: 'row',
@@ -278,6 +280,7 @@ const styles = StyleSheet.create({
   EventIcon: {
     width: wp('11%'),
     height: hp('5.5%'),
+    marginLeft: wp('1%')
   },
   Circle: {
     width: wp('16%'),

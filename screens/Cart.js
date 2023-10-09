@@ -1,19 +1,33 @@
-import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Pressable, TextInput, Button } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Pressable, TextInput, Button, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import sportProduct from '../assets/sportShoe1.jpg'
 import trash from '../assets/delete.png'
 import axios from 'axios';
 
-const Cart = ({ navigation }) => {
-  const [data, setData] = useState([]);
+const Cart = ({ navigation }) => {   
+  const [data, setData] = useState([]);  
   const [order, setOrder] = useState([]);
-  const [listProduct, setListProduct] = useState([]);
+  const [products, setListProduct] = useState([]);
+  const [totalPrice, setTotalPrice] = useState('');
+  const [items, setItems] = useState('');
 
-
+ 
   useEffect(() => {
+    // Ban đầu, fetch dữ liệu và sau đó thiết lập một interval cho việc làm mới
     getBooking();
+
+    const refreshInterval = setInterval(() => {  
+      // Làm mới dữ liệu bằng cách gọi lại fetchData
+      getBooking();
+    }, 1000); // Làm mới mỗi 60 giây (1 phút)  
+
+    // Trả về một hàm để xóa interval khi component bị unmount
+    return () => {
+      clearInterval(refreshInterval);  
+    };
   }, []);
+
   const getBooking = async () => {
     try {
       const response = await axios.get('https://shoeshineapi.azurewebsites.net/api/bookings');
@@ -26,10 +40,26 @@ const Cart = ({ navigation }) => {
           return { id: index + 1, name }
         })
         setListProduct(listProduct);
-        console.log(listProduct)
+        const numberOfIds = listProduct.length;
+        // console.log(numberOfIds) 
+        if (numberOfIds == 1) {
+          setTotalPrice('50.000')
+          setItems('1')
+        }
+        else if (numberOfIds == 2) {
+          setTotalPrice('100.000')
+          setItems('2')
+        }
+        else if (numberOfIds == 3) {
+          setTotalPrice('150.000')
+          setItems('3')   
+        }
+        else {
+          setTotalPrice('0')
+          setItems('0')
+        }
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
     }
   };
 
@@ -50,60 +80,35 @@ const Cart = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.Container}>
       <View style={styles.Line}></View>
-      {order?.categoryName?.map((name, index) =>
-        <View style={styles.Products} key={name}>
-          <View>
-            <Image source={sportProduct} style={styles.Picture} />
-          </View>
-          <View style={styles.TitileProducts}>
-            {/* <Text style={{ fontSize: wp('4%'), fontWeight: 'bold', color: '#223263', marginBottom: hp('1%') }}>Leather Shoes</Text>
-          <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#FB7181', marginBottom: hp('0.5%') }}>{order.serviceName}</Text> */}
+      <ScrollView>
+        {order?.categoryName?.map((name, index) =>
+          <View style={styles.Products} key={name}>
             <View>
-              <Text style={{ fontSize: wp('4%'), fontWeight: 'bold', color: '#223263', marginBottom: hp('1%') }}>{name}</Text>
-              <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#FB7181', marginBottom: hp('0.5%') }}>{order.serviceName}</Text>
+              <Image source={sportProduct} style={styles.Picture} />
             </View>
-            <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#40BFFF', marginBottom: hp('0.5%'), width: wp('13%') }}>50.000</Text>
-          </View>
-          <View style={{ marginLeft: wp('1%') }}>
-            <TouchableOpacity>
-              <Image style={styles.Trash} source={trash} />
-            </TouchableOpacity>
-            <View style={styles.counter}>
-              <Pressable onPress={decrementQuantity} style={styles.button}>
-                <Text style={{ marginLeft: wp('3%'), fontSize: wp('5%'), fontWeight: 'bold', color: '#9098B1' }}>-</Text>
-              </Pressable>
-              <Text style={styles.quantity}>{quantity}</Text>
-              <Pressable onPress={incrementQuantity} style={styles.button}>
-                <Text style={styles.buttonText}>+</Text>
-              </Pressable>
+            <View style={styles.TitileProducts}>
+              <View>
+                <Text style={{ fontSize: wp('4%'), fontWeight: 'bold', color: '#223263', marginBottom: hp('1%') }}>{name}</Text>
+                <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#FB7181', marginBottom: hp('0.5%') }}>{order.serviceName}</Text>
+              </View>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#40BFFF', marginBottom: hp('0.5%'), width: wp('13%') }}>50.000</Text>
+                <View style={styles.counter}>
+                  <Pressable onPress={decrementQuantity} style={styles.button}>
+                    <Text style={{ marginLeft: wp('3%'), fontSize: wp('5%'), fontWeight: 'bold', color: '#9098B1' }}>-</Text>
+                  </Pressable>
+                  <Text style={styles.quantity}>{quantity}</Text>
+                  <Pressable style={styles.button}>
+                    <Text style={styles.buttonText}>+</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+            <View>
             </View>
           </View>
-        </View>
-      )}
-      {/* <View style={styles.Products}>
-        <View>
-          <Image source={sportProduct} style={styles.Picture} />
-        </View>
-        <View style={styles.TitileProducts}>
-          <Text style={{ fontSize: wp('4%'), fontWeight: 'bold', color: '#223263', marginBottom: hp('1%') }}>Leather Shoes</Text>
-          <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#FB7181', marginBottom: hp('0.5%') }}>Standard Hygiene</Text>
-          <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#40BFFF', marginBottom: hp('0.5%'), width: wp('13%') }}>50.000</Text>
-        </View>
-        <View style={{ marginLeft: wp('1%') }}>
-          <TouchableOpacity>
-            <Image style={styles.Trash} source={trash} />
-          </TouchableOpacity>
-          <View style={styles.counter}>
-            <Pressable onPress={decrementQuantity1} style={styles.button}>
-              <Text style={{ marginLeft: wp('3%'), fontSize: wp('5%'), fontWeight: 'bold', color: '#9098B1' }}>-</Text>
-            </Pressable>
-            <Text style={styles.quantity}>{quantity1}</Text>
-            <Pressable onPress={incrementQuantity1} style={styles.button}>
-              <Text style={styles.buttonText}>+</Text>
-            </Pressable>
-          </View>
-        </View>
-      </View> */}
+        )}
+      </ScrollView>
       <View style={{ flexDirection: 'row' }}>
         <View style={styles.Border}>
           <TextInput
@@ -116,16 +121,16 @@ const Cart = ({ navigation }) => {
       </View>
       <View style={styles.Details}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-          <Text style={{ marginRight: wp('45%'), marginBottom: hp('2%'), color: '#40BFFF' }}>Items(2)</Text>
-          <Text>100.000</Text>
+          <Text style={{ marginRight: wp('45%'), marginBottom: hp('2%'), color: '#40BFFF' }}>Items({items})</Text>
+          <Text>{totalPrice}</Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
           <Text style={{ marginRight: wp('48%'), marginBottom: hp('6%'), color: '#40BFFF' }}>Shipping</Text>
-          <Text>20.000</Text>
+          <Text style={{ marginLeft: wp('10%') }}>0</Text>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
           <Text style={{ marginRight: wp('41%'), fontWeight: 'bold' }}>Total Price</Text>
-          <Text style={{ color: '#40BFFF', fontWeight: 'bold' }}>120.000</Text>
+          <Text style={{ color: '#40BFFF', fontWeight: 'bold' }}>{totalPrice}</Text>
         </View>
       </View>
       <View>
@@ -179,8 +184,8 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: "#F6F4D9",
     height: hp('4%'),
-    marginTop: hp('5%'),
     borderRadius: 5,
+    marginLeft: wp('18%')
   },
   button: {
     backgroundColor: 'white',
@@ -209,7 +214,6 @@ const styles = StyleSheet.create({
   Trash: {
     height: hp('3%'),
     width: wp('6%'),
-    marginLeft: wp('18%')
   },
   Border: {
     borderWidth: 1.5,

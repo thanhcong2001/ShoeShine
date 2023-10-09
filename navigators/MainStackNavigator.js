@@ -29,6 +29,7 @@ import AddProduct from '../screens/AddProduct'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MyProducts from '../screens/MyProducts';
+import Success from '../screens/Success';
 
 //Bottom navigator
 const Tab = createBottomTabNavigator();
@@ -49,7 +50,7 @@ function MyTabs() {
                 source={require('../assets/loupe.png')} // Thay bằng đường dẫn tới icon search
                 style={{
                   width: wp('5.2%'),
-                  height: hp('2.5%'), marginLeft: wp('15%')
+                  height: hp('2.5%'), marginLeft: wp('12%')
                 }}
               />
             </TouchableOpacity>
@@ -58,6 +59,11 @@ function MyTabs() {
       }} />
       <Tab.Screen name="Account" component={Setting} options={{
         tabBarIcon: ({ color }) => <Icon name="user" size={wp('7%')} color={color} />,
+        headerTitle: () => (
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: wp('5%'), letterSpacing: wp('0.5%'), marginLeft: wp('25%'), fontWeight: 'bold', color: '#223263' }}>My Account</Text>
+          </View>
+        )
       }} />
     </Tab.Navigator>
   );
@@ -101,13 +107,13 @@ const MainStackNavigator = () => {
         options={{
           headerTitle: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontSize: wp('5%') }}>My Products</Text>
+              <Text style={{ fontSize: wp('5%'),marginLeft:wp('18%') }}>My Service</Text>
               <TouchableOpacity>
                 <Image
                   source={require('../assets/loupe.png')} // Thay bằng đường dẫn tới icon search
                   style={{
                     width: wp('5.2%'),
-                    height: hp('2.5%'), marginLeft: wp('30%')
+                    height: hp('2.5%'), marginLeft: wp('20%')
                   }}
                 />
               </TouchableOpacity>
@@ -118,7 +124,9 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Payment" component={Payment} options={{ title: 'Payment' }} />
       <Stack.Screen name="Shipping" component={Shipping} options={{ title: 'Booking Service' }} />
       <Stack.Screen name="Store" component={Store} options={{ title: 'Store' }} />
-      <Stack.Screen name="AddProduct" component={AddProduct} options={{ title: 'Add Product' }} />
+      <Stack.Screen name="AddProduct" component={AddProduct} options={{ title: 'Add Service' }} />
+      <Stack.Screen name="Success" component={Success} options={{ headerShown: false }} />
+
     </Stack.Navigator>
   );
 };
