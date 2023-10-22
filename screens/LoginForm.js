@@ -13,20 +13,21 @@ const LoginForm = ({ navigation }) => {
     const [userAccount, setUserAccount] = useState('');
     const [userPassword, setUserPassword] = useState('');
     const handleLogin = () => {
-        axios.get("https://shoeshineapi.azurewebsites.net/api/users")
-            .then((response) => {
-                const user = response.data.find(i => i.userAccount === userAccount);
-                if (user) {
-                    if (user.userPassword === userPassword) {
-                        navigation.navigate('HomePage')
-                    } else {
-                        Alert.alert('Wrong password');
-                    }
-                } else {
-                    Alert.alert('Wrong account');
-                }
-            })
-            .catch((err) => console.log(err))
+        // axios.get("https://shoeshineapi.azurewebsites.net/api/users")
+        //     .then((response) => {
+        //         const user = response.data.find(i => i.userAccount === userAccount);
+        //         if (user) {
+        //             if (user.userPassword === userPassword) {
+        //                 navigation.navigate('HomePage')
+        //             } else {
+        //                 Alert.alert('Wrong password');
+        //             }
+        //         } else {
+        //             Alert.alert('Wrong account');
+        //         }
+        //     })
+        //     .catch((err) => console.log(err))
+        navigation.navigate('HomePage')
     };
 
     return (
@@ -55,7 +56,7 @@ const LoginForm = ({ navigation }) => {
                     />
                 </View>
                 <View style={styles.Button}>
-                    <Button title="Login" color="blue" onPress={handleLogin}/>
+                    <Button title="Login" color="blue" onPress={handleLogin} />
                 </View>
                 <View style={styles.Vertical}>
                     <View style={{ flex: 1, height: 2, backgroundColor: 'white', marginVertical: 10 }}>

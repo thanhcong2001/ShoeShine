@@ -22,6 +22,7 @@ import WriteFeed from '../screens/WriteFeed'
 import Payment from '../screens/Payment'
 import RegisterStore from '../screens/RegisterStore'
 import Cart from '../screens/Cart'
+import Search from '../screens/Search'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -81,6 +82,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="RegisterStore" component={RegisterStore} options={{ title: 'Register Store' }} />
       <Stack.Screen name="Payment" component={Payment} options={{ title: 'Payment' }} />
       <Stack.Screen name="Shipping" component={Shipping} options={{ title: 'Booking Service' }} />
+      <Stack.Screen name="Search" component={Search} options={{ title: 'Search' }} />
     </Stack.Navigator>
   );
 };

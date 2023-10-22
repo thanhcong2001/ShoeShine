@@ -14,6 +14,7 @@ import store from '../assets/store.jpg'
 import rating from '../assets/rating.png'
 import rating1 from '../assets/rating1.png'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Button } from 'react-native-elements'
 const HomePage = ({ navigation }) => {
   //Store near you
   const storeNear = [
@@ -26,28 +27,29 @@ const HomePage = ({ navigation }) => {
   ];
   const numberOfItems = 4; // Render component number
   const limitedStoreNear = storeNear.slice(0, numberOfItems);
+  const [inputValue, setInputValue] = React.useState('');
   const renderStoreItem = ({ item }) => (
 
     <TouchableOpacity style={styles.Store} onPress={() => {
-      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image, Distance: item.distance})
+      navigation.navigate('StoreDetails', { storeName: item.name, storeImage: item.image, Distance: item.distance })
     }}>
       <Image source={item.image} style={styles.ImageStore} />
-      <Image style={{width:wp('20%'),height:hp('2.2%')}} source={rating1}/>
+      <Image style={{ width: wp('20%'), height: hp('2.2%') }} source={rating1} />
       <Text style={styles.StoreName}>{item.name}</Text>
       <Text style={styles.StoreLocation}>{item.distance}</Text>
     </TouchableOpacity>
   );
   // Recommended Store
   const storeRecommemed = [
-    { id: '1', name: 'Store Mr.Phui', distance: '1.2km', location: 'District 8', image: require('../assets/Phui.jpg')},
+    { id: '1', name: 'Store Mr.Phui', distance: '1.2km', location: 'District 8', image: require('../assets/Phui.jpg') },
     { id: '2', name: 'BB Cleaning', distance: '4km', location: 'District 3', image: require('../assets/BBCleaning.jpg') },
-    { id: '3', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg')},
-    { id: '4', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Buzz.jpg')},
-    { id: '5', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/xClean.jpg')},
+    { id: '3', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/vitamin.jpg') },
+    { id: '4', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Buzz.jpg') },
+    { id: '5', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/xClean.jpg') },
     { id: '6', name: 'Store DR.Thong', distance: '5km', location: 'Thu Duc City', image: require('../assets/DrThong.jpg') },
     { id: '7', name: 'Sneaker Vitamin', distance: '7km', location: 'District 8', image: require('../assets/Phui.jpg') },
     { id: '8', name: 'Sneaker Buzz', distance: '9km', location: 'District 8', image: require('../assets/Phui.jpg') },
-    { id: '9', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/Phui.jpg')},
+    { id: '9', name: 'Store X-Clean', distance: '10km', location: 'District 1', image: require('../assets/Phui.jpg') },
   ];
   const renderStoreRecommemed = ({ item }) => (
     <TouchableOpacity style={styles.Recommended} onPress={() => {
@@ -55,7 +57,7 @@ const HomePage = ({ navigation }) => {
     }}>
       <Image source={item.image} style={styles.ImageStore} />
       <Text style={styles.StoreName}>{item.name}</Text>
-      <Image style={{width:wp('20%'),height:hp('1.8%')}} source={rating1}/>
+      <Image style={{ width: wp('20%'), height: hp('1.8%') }} source={rating1} />
       <Text style={styles.StoreLocation}>{item.distance}</Text>
       <Text style={styles.StoreLocation}>{item.location}</Text>
     </TouchableOpacity>
@@ -79,11 +81,14 @@ const HomePage = ({ navigation }) => {
     <View style={styles.All}>
       <SafeAreaView style={styles.Container}>
         <View style={styles.Search}>
-          <Image source={search} style={styles.SearchIcon} />
+          <TouchableOpacity onPress={() => navigation.navigate('Search', { inputValue })}>
+            <Image source={search} style={styles.SearchIcon} />
+          </TouchableOpacity>
+
           <TextInput
             placeholder="Search Store"
-          // value={username}
-          // onChangeText={text => setUsername(text)}
+            value={inputValue}
+            onChangeText={text => setInputValue(text)}
           />
         </View>
         <View style={styles.IconOne}>
@@ -246,7 +251,7 @@ const styles = StyleSheet.create({
     marginLeft: wp('2%'),
   },
   CleaningPic: {
-    marginRight:wp('1%'),
+    marginRight: wp('1%'),
     marginTop: hp('2.6%'),
     marginLeft: wp('1.5%'),
     width: wp('90%'),
