@@ -12,28 +12,49 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 import jwtDecode from 'jwt-decode';
+import Modal from 'react-native-modal';
+
 const LoginForm = ({ navigation }) => {
     const [userEmail, setUserEmail] = useState('');
     const [userPassword, setUserPassword] = useState('');
 
+    const forgetPass = async () => {
+        await axios.get(`http://shoeshine-001-site1.ftempurl.com/api/users/recover?email=${inputValue}`)
+            .then(res => {
+                if (res.status === 200) {
+                    Alert.alert("Success!!")
+                }
+            })
+            .catch(err => { console.log('Cate Fail') })
+    }
     const handleLogin = () => {
         const data = { email: userEmail, password: userPassword }
-        axios.post(`https://shoeshineapi.azurewebsites.net/api/users/login?email=${userEmail}&password=${userPassword}`, data)
+        axios.post(`http://shoeshine-001-site1.ftempurl.com/api/users/login?email=${userEmail}&password=${userPassword}`, data)
             .then(async (response) => {
                 if (response.status === 200) {
                     const token = response.data;
                     await AsyncStorage.setItem('userToken', token);
                     const decodedToken = jwtDecode(token);
                     const userId = decodedToken.UserId;
+                    AsyncStorage.setItem('userId', userId)   
                     navigation.navigate('HomePage');
                     console.log('userId:', userId);
                 } else {
                     Alert.alert('Đăng nhập thất bại');
                 }
             })
-            .catch((err) => console.log(err))
+            .catch((err) => Alert.alert('Đăng nhập thất bại'))
+    };
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [inputValue, setInputValue] = useState('');
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
     };
 
+    const handleInputChange = (text) => {
+        setInputValue(text);
+    };
     return (
         <View style={styles.All}>
             <ImageBackground source={back} blurRadius={1.2} style={styles.backPic}>
@@ -42,6 +63,25 @@ const LoginForm = ({ navigation }) => {
                     <Text style={styles.Header}>ShoeShine</Text>
                     <Text style={styles.Title}>Speacial footwear for everyday use</Text>
                 </View>
+                <Modal isVisible={isModalVisible} onBackdropPress={toggleModal} >
+                    <View style={{ height: hp('20%'), justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', borderRadius: 10 }}>
+                        <View style={{ marginTop: hp('2%') }}>
+                            <TextInput
+                                placeholder='Enter Your Email'
+                                onChangeText={handleInputChange}
+                                style={styles.PriceInput}
+                            />
+                        </View>
+                        <View style={{ flexDirection: 'row', marginBottom: hp('1%'), marginTop: hp('2%') }}>
+                            <TouchableOpacity style={styles.ButtonPrice} onPress={forgetPass}>
+                                <Text style={{ fontSize: wp('4%'), marginTop: hp('1.5%'), color: 'white', fontWeight: '500' }}>Lưu</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.Cancel} onPress={toggleModal}>
+                                <Text style={{ fontSize: wp('4%'), marginTop: hp('1.5%'), color: 'white', fontWeight: '500' }}>Hủy</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <View style={styles.Form}>
                     <View style={styles.Email}>
                         <Image source={mail} style={styles.Icon} />
@@ -84,9 +124,11 @@ const LoginForm = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.SignUp}>
-                        <Text style={{ marginTop: 10, color: 'white' }}>Don’t have an account?</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                            <Text style={styles.SignUpTitle}>Sign Up here?</Text>
+                        <TouchableOpacity style={{ marginRight: 50 }} onPress={() => navigation.navigate('SignUp')}>
+                            <Text style={styles.SignUpTitle}>Sign Up Here</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={toggleModal}>
+                            <Text style={styles.SignUpTitle}>Forget Password</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -196,7 +238,7 @@ const styles = StyleSheet.create({
     SignUp: {
         alignSelf: 'center',
         flexDirection: 'row',
-        marginTop: hp('0.5%')
+        marginTop: hp('0.5%'),
     },
     SignUpTitle: {
         color: 'white',
@@ -222,5 +264,35 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold'
     }
+    ,
+    ButtonPrice: {
+        borderColor: 'blue',
+        borderWidth: 1,
+        marginRight: wp('20%'),
+        paddingHorizontal: wp('10%'),
+        height: hp('6%'),
+        borderRadius: 5,
+        width: wp('29%'),
+        backgroundColor: "#40BFFF",
+    },
+    Cancel: {
+        borderColor: 'blue',
+        borderWidth: 1,
+        paddingHorizontal: wp('10%'),
+        height: hp('6%'),
+        borderRadius: 5,
+        width: wp('29%'),
+        backgroundColor: "#898A8D"
+    },
+    NamePrice: {
+    },
+    PriceInput: {
+        borderWidth: 1,
+        borderColor: 'blue',
+        width: wp('79%'),
+        borderRadius: 5,
+        paddingLeft: wp('2%'),
+        height: hp('5%'),
+    },
 
 })

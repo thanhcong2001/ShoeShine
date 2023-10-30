@@ -16,7 +16,7 @@ const LoginForm = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const handleSignUp = () => {
         if (password == rePassword) {
-            axios.post("https://shoeshineapi.azurewebsites.net/api/users/register", {
+            axios.post("http://shoeshine-001-site1.ftempurl.com/api/users/register?role=2", {
                 // Thêm các trường dữ liệu đăng ký tài khoản vào đây
                 userName: userName,
                 userEmail: userEmail,

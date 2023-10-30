@@ -23,15 +23,13 @@ import Payment from '../screens/Payment'
 import RegisterStore from '../screens/RegisterStore'
 import Cart from '../screens/Cart'
 import Store from '../screens/Store'
-
 import AddProduct from '../screens/AddProduct'
-
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MyProducts from '../screens/MyProducts';
 import Success from '../screens/Success';
+import DashBoard from '../screens/Dashboard';
 
-//Bottom navigator
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
@@ -47,7 +45,7 @@ function MyTabs() {
             <Text style={{ fontSize: wp('5%'), letterSpacing: wp('0.1%'), marginLeft: wp('20%'), fontWeight: 'bold', color: '#223263' }}>Your Shopping Cart</Text>
             <TouchableOpacity>
               <Image
-                source={require('../assets/loupe.png')} // Thay bằng đường dẫn tới icon search
+                source={require('../assets/loupe.png')}
                 style={{
                   width: wp('5.2%'),
                   height: hp('2.5%'), marginLeft: wp('12%')
@@ -126,6 +124,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="Store" component={Store} options={{ title: 'Store' }} />
       <Stack.Screen name="AddProduct" component={AddProduct} options={{ title: 'Add Service' }} />
       <Stack.Screen name="Success" component={Success} options={{ headerShown: false }} />
+      <Stack.Screen name="DashBoard" component={DashBoard} options={{ headerShown: false }} />
 
     </Stack.Navigator>
   );

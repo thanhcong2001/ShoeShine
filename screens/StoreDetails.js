@@ -33,7 +33,7 @@ const StoreDetails = ({ route, navigation }) => {
 
   const fetchDataFromApi = async () => {
     try {
-      const response = await axios.get('https://shoeshineapi.azurewebsites.net/api/categorys/get-all');
+      const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/categories/get-all');
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -53,7 +53,7 @@ const StoreDetails = ({ route, navigation }) => {
  
   const fetchService = async () => {
     try {
-      const response = await axios.get('https://shoeshineapi.azurewebsites.net/api/services/get-all');
+      const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/services');
       setService(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -117,10 +117,10 @@ const StoreDetails = ({ route, navigation }) => {
       "storeId": Id,
       "categoryIdArray": selectedOptions  
     }
-    axios.post('https://shoeshineapi.azurewebsites.net/api/bookings', dataToSend)
+    axios.post('http://shoeshine-001-site1.ftempurl.com/api/bookings', dataToSend)
       .then((response) => {
         if (response.status === 200) {
-          navigation.navigate('Shipping')
+          navigation.navigate('Shipping') 
         }
       })
   }

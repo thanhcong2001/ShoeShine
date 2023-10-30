@@ -2,69 +2,101 @@ import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Pressabl
 import React, { useState, useEffect } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import sportProduct from '../assets/sportShoe1.jpg'
+import { useRoute } from '@react-navigation/native';
 import trash from '../assets/delete.png'
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Cart = ({ navigation }) => {   
-  const [data, setData] = useState([]);  
+const Cart = ({ navigation }) => {
+  const route = useRoute(); 
+  const [data, setData] = useState([]);
+  const [selectedService, setSelectedService] = useState(null)
+  const [serviceList, setServiceList] = useState(null)
+  const [userId, setUserId] = useState(AsyncStorage.getItem('userId'))
   const [order, setOrder] = useState([]);
   const [products, setListProduct] = useState([]);
   const [totalPrice, setTotalPrice] = useState('');
   const [items, setItems] = useState('');
+  const [total, setTotal] = useState();
 
- 
+  const PriceTotal = () => {
+    setTotalPrice(selectedService?.servicePrice)
+    setTotal(totalPrice * items)
+  }
+
   useEffect(() => {
     // Ban đầu, fetch dữ liệu và sau đó thiết lập một interval cho việc làm mới
     getBooking();
+    getService();
+    PriceTotal();
 
-    const refreshInterval = setInterval(() => {  
+    const refreshInterval = setInterval(() => {
       // Làm mới dữ liệu bằng cách gọi lại fetchData
       getBooking();
-    }, 1000); // Làm mới mỗi 60 giây (1 phút)  
+      PriceTotal();
+    }, 1000); // Làm mới mỗi 60 giây (1 phút)    
 
     // Trả về một hàm để xóa interval khi component bị unmount
     return () => {
-      clearInterval(refreshInterval);  
+      clearInterval(refreshInterval);
     };
   }, []);
 
+
+  const getService = async () => {
+    await axios.get('http://shoeshine-001-site1.ftempurl.com/api/services')
+      .then(res => {
+        setServiceList(res.data)
+      })
+      .catch(err => { })
+  }
+
   const getBooking = async () => {
     try {
-      const response = await axios.get('https://shoeshineapi.azurewebsites.net/api/bookings');
+      const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/bookings');
       const orders = response.data;
       setData(orders);
       if (orders.length > 0) {
         const lastOrder = orders[orders.length - 1];
+        const itemFound = serviceList.find(i => i.serviceId == lastOrder.serviceId)
+        setSelectedService(itemFound)
         setOrder(lastOrder);
         const listProduct = order?.categoryName?.map((name, index) => {
           return { id: index + 1, name }
         })
         setListProduct(listProduct);
         const numberOfIds = listProduct.length;
-        // console.log(numberOfIds) 
-        if (numberOfIds == 1) {
-          setTotalPrice('50.000')
-          setItems('1')
-        }
-        else if (numberOfIds == 2) {
-          setTotalPrice('100.000')
-          setItems('2')
-        }
-        else if (numberOfIds == 3) {
-          setTotalPrice('150.000')
-          setItems('3')   
-        }
-        else {
-          setTotalPrice('0')
-          setItems('0')
-        }
+        setItems(numberOfIds)
+      }
+      else {
       }
     } catch (error) {
     }
   };
 
+  const createOrder = async () => {
+    const data = {
+      paymentMethodId: 1,
+      userId: userId._j,
+      address: '148/4A Thanh Pho Ho Chi Minh',
+      totalPrice: 100000,
+      shipfee: 50000,
+      quantityItem: 2
+    }
+    console.log(data);
+    await axios.post(`http://shoeshine-001-site1.ftempurl.com/api/orders`, data)
+      .then(res => {
+        navigation.navigate(`Payment`)
+      })
+      .catch(err => { console.log(err) })
+  }
 
   const [quantity, setQuantity] = useState(1);
+
+  function convertVND(price) {
+    if (price != null || price != undefined || price != '' || price) return price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
+    else return 0
+  }
 
   const incrementQuantity = (id) => {
     if (quantity < 5) {
@@ -92,7 +124,7 @@ const Cart = ({ navigation }) => {
                 <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#FB7181', marginBottom: hp('0.5%') }}>{order.serviceName}</Text>
               </View>
               <View style={{ flexDirection: 'row' }}>
-                <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#40BFFF', marginBottom: hp('0.5%'), width: wp('13%') }}>50.000</Text>
+                <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#40BFFF', marginBottom: hp('0.5%'), width: wp('13.3%') }}>{selectedService.servicePrice}</Text>
                 <View style={styles.counter}>
                   <Pressable onPress={decrementQuantity} style={styles.button}>
                     <Text style={{ marginLeft: wp('3%'), fontSize: wp('5%'), fontWeight: 'bold', color: '#9098B1' }}>-</Text>
@@ -101,8 +133,8 @@ const Cart = ({ navigation }) => {
                   <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>+</Text>
                   </Pressable>
-                </View>
-              </View>
+                </View> 
+              </View>         
             </View>
             <View>
             </View>
@@ -120,27 +152,29 @@ const Cart = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.Details}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={{ marginRight: wp('45%'), marginBottom: hp('2%'), color: '#40BFFF' }}>Items({items})</Text>
-          <Text>{totalPrice}</Text>
+          <Text>{total}</Text>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={{ marginRight: wp('48%'), marginBottom: hp('6%'), color: '#40BFFF' }}>Shipping</Text>
           <Text style={{ marginLeft: wp('10%') }}>0</Text>
         </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={{ marginRight: wp('41%'), fontWeight: 'bold' }}>Total Price</Text>
-          <Text style={{ color: '#40BFFF', fontWeight: 'bold' }}>{totalPrice}</Text>
+          <Text style={{ color: '#40BFFF', fontWeight: 'bold' }}>{total}</Text>
         </View>
       </View>
       <View>
-        <TouchableOpacity style={styles.NextButton} onPress={() => { navigation.navigate('Payment') }}>
+        <TouchableOpacity style={styles.NextButton} onPress={createOrder}>
           <Text style={{ marginLeft: wp('35%'), marginTop: hp('0.5%'), color: 'white', fontSize: wp('4.5%'), fontWeight: 'bold' }}>Next</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   )
 }
+
+
 
 export default Cart
 

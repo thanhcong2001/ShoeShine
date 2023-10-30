@@ -2,13 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image } from "react-native"
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
+import sportProduct from '../assets/sportShoe1.jpg'
 const endComponent = () => {
     return (
         <View style={{ alignItems: 'center', width: wp('100%'), paddingTop: hp('1%') }}>
             <Text style={{ color: '#8b8b8b' }}>End Screen Reached</Text>
         </View>
-    );
+    ); 
 };
 
 const emptyComponent = () => {
@@ -35,27 +35,16 @@ const MyProducts = ({ navigation }) => {
         </TouchableOpacity>
     );
 
-    //Product List
-    // const product = [
-    //     {
-    //         id: '1', name: 'Shoes Air K-1 Type Student', image: require('../assets/myshoes1.png'),
-    //         price: 100000, inStore: 2, sold: 0, like: 0, view: 0
-    //     },
-    //     {
-    //         id: '2', name: 'Shoes Nike A93 Type Street', image: require('../assets/myshoes2.png'),
-    //         price: 100000, inStore: 2, sold: 0, like: 0, view: 0
-    //     }
-    // ];
 
     const renderProductItem = ({ item }) => (
         <View style={styles.RenderProductContainer}>
             <View style={styles.ImageNameInfo}>
                 <View>
-                    <Image source={{ uri: item.image }} style={styles.Image} resizeMode="contain" />
+                    <Image source={sportProduct} style={styles.Image} resizeMode="contain" />
                 </View>
                 <View style={{ marginLeft: wp('2%') }}>
-                    <Text style={{ padding: wp('2%'), fontSize: 15 }}>{item.name}</Text>
-                    <Text style={{ paddingLeft: wp('2%'), fontSize: 15 }}>₫{item.price}</Text>
+                    <Text style={{ padding: wp('2%'), fontSize: 15 }}>{item.serviceName}</Text>
+                    <Text style={{ paddingLeft: wp('2%'), fontSize: 15 }}>₫{item.servicePrice}</Text>
                 </View>
             </View>
             <View style={styles.ProductStatsMainContainer}>
@@ -101,7 +90,7 @@ const MyProducts = ({ navigation }) => {
     //Get Data in Mockapi
     useEffect(() => {
         const abortController = new AbortController();
-        const url = `https://64929a64428c3d2035d0547b.mockapi.io/MyProducts`;
+        const url = `https://shoeshineapi.azurewebsites.net/api/services`;
 
         const fetchData = async () => {
             try {
@@ -156,7 +145,7 @@ const MyProducts = ({ navigation }) => {
                     <View>
                         <FlatList
                             data={data}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.serviceId}
                             renderItem={renderProductItem}
                             showsHorizontalScrollIndicator={true}
                             contentContainerStyle={styles.ProductList}
@@ -168,7 +157,7 @@ const MyProducts = ({ navigation }) => {
             </SafeAreaView>
             <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={() => navigation.navigate('AddProduct')} style={styles.Button} activeOpacity={0.7}>
-                    <Text style={styles.Txt}>Add product</Text>
+                    <Text style={styles.Txt}>Add Service</Text> 
                 </TouchableOpacity>
             </View>
         </View>

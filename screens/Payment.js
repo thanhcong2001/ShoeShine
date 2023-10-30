@@ -28,7 +28,7 @@ const Payment = ({ navigation }) => {
 
     const getMomo = async () => {
         try {
-            const response = await axios.get('https://shoeshineapi.azurewebsites.net/api/orders');
+            const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/orders');
             const orders = response.data;
             setData(orders);
             if (orders.length > 0) {
@@ -37,7 +37,7 @@ const Payment = ({ navigation }) => {
                 if (lastOrderIsOrderStatus === 1) {
                     navigation.navigate("Success")
                 } else {
-                    console.log('isOrderStatus của phần tử cuối cùng không phải là 0.');
+                    // console.log('isOrderStatus của phần tử cuối cùng không phải là 0.');
                 }
             }
         } catch (error) {
@@ -49,25 +49,24 @@ const Payment = ({ navigation }) => {
     // const [isPressed2, setIsPressed2] = useState(false);
     const momo = async () => {
         try {
-            const response = await axios.get('https://shoeshineapi.azurewebsites.net/api/payments/momo');
-            setMomoAppURI(response.data);
-        } catch (error) {
-            // console.error('Error fetching data:', error);
-        }
-        Linking.canOpenURL(momoAppURI)
-            .then(supported => {
-                if (supported) {
-                    Linking.openURL(momoAppURI);
-                } else {
-                    // Nếu không thể mở ứng dụng Facebook, bạn có thể mở trang web của Facebook
-                    Alert.alert("Fails!")
-                }
-            })
-            .catch(err => {
-                console.error('Lỗi khi kiểm tra hoặc mở ứng dụng:', err);
-            });
+            const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/payments/momo/');
+            const momoAppURI = response.data; // Thiết lập giá trị momoAppURI từ phản hồi
 
-    }
+            Linking.canOpenURL(momoAppURI)
+                .then((supported) => {
+                    if (supported) {
+                        Linking.openURL(momoAppURI);
+                    } else {
+                        Alert.alert("Fails!");
+                    }
+                })
+                .catch((err) => {
+                    console.error('Lỗi khi kiểm tra hoặc mở ứng dụng:', err);
+                });
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     const handlePress = () => {
         setIsPressed(!isPressed);

@@ -6,7 +6,7 @@ import appointment from "../assets/appointment.png";
 import location from "../assets/location.png";
 import creditCard from "../assets/payment.png";
 import shop from "../assets/shopTake.png";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 
 const Setting = ({ navigation }) => {
@@ -14,6 +14,14 @@ const Setting = ({ navigation }) => {
   const handlePress = () => {
     // Khi nút được nhấn vào, đảo ngược trạng thái
     navigation.navigate("Profile");
+  };
+  const logout =() => {
+    try {
+      AsyncStorage.removeItem('userId');
+      navigation.navigate('Main');
+    } catch (error) {
+      console.error('Lỗi khi đăng xuất:', error);
+    }
   };
   return (
     <View style={styles.Container}>
@@ -29,28 +37,18 @@ const Setting = ({ navigation }) => {
           <Text style={styles.Title}>Order</Text>
         </View>
       </TouchableOpacity>
-      {/* <TouchableOpacity>
+      {/* <TouchableOpacity onPress={()=>{navigation.navigate('DashBoard')}}>
         <View style={styles.Account}>
           <Image source={appointment} style={styles.Image} />
-          <Text style={styles.Title}>Booking Service</Text>
+          <Text style={styles.Title}>DashBoard</Text>
         </View>
-      </TouchableOpacity> */}
+      </TouchableOpacity>   */}
       <TouchableOpacity>
         <View style={styles.Account}>
           <Image source={location} style={styles.Image} />
           <Text style={styles.Title}>Address</Text>
         </View>
       </TouchableOpacity>
-      {/* <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("Payment");
-        }}
-      >
-        <View style={styles.Account}>
-          <Image source={creditCard} style={styles.Image} />
-          <Text style={styles.Title}>Payment</Text>
-        </View>
-      </TouchableOpacity> */}
       <TouchableOpacity
         onPress={() => {
           // navigation.navigate('RegisterStore')
@@ -62,12 +60,10 @@ const Setting = ({ navigation }) => {
           <Text style={styles.Title}>Register Store</Text>
         </View>
       </TouchableOpacity>
-      {/* <TouchableOpacity onPress={()=>{
-        navigation.navigate('Store')
-      }}>
+      {/* <TouchableOpacity onPress={logout}>
         <View style={styles.Account}>
-          <Image source={shop} style={styles.Image} />
-          <Text style={styles.Title}>My Store</Text>
+          <Image source={creditCard} style={styles.Image} />
+          <Text style={styles.Title}>Payment</Text>
         </View>
       </TouchableOpacity> */}
     </View>

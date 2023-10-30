@@ -10,17 +10,17 @@ import axios from 'axios'
 
 const RegisterStore = ({ navigation }) => {
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
-    const [storeName, setStoreName] = useState('cong5');
-    const [storeAddress, setStoreAddress] = useState('HCM');
-    const [storePhone, setStorePhone] = useState('0393103426');
-    const [storeEmail, setStoreEmail] = useState('vy5@gmail.com');
+    const [storeName, setStoreName] = useState('');
+    const [storeAddress, setStoreAddress] = useState('');
+    const [storePhone, setStorePhone] = useState('');
+    const [storeEmail, setStoreEmail] = useState('');
     const handleRegisterStore = () => {
         if (toggleCheckBox == true) {
-            axios.post("https://shoeshineapi.azurewebsites.net/api/stores/register", {
+            axios.post("http://shoeshine-001-site1.ftempurl.com/api/stores", {
                 storeName: storeName,
                 storeAddress: storeAddress,
                 storePhone: storePhone,
-                storeEmail: storeEmail
+                storeEmal: storeEmail
             })
                 .then((response) => {
                     // Xử lý phản hồi từ máy chủ sau khi đăng ký
@@ -90,7 +90,7 @@ const RegisterStore = ({ navigation }) => {
                 <Text style={styles.Label}>By registering, you are agreeing with our Terms of Use and Privacy Policy</Text>
             </View>
             <View style={{ marginTop: hp('5%') }}>
-                <TouchableOpacity style={styles.Button} activeOpacity={0.7} onPress={()=>{navigation.navigate('Store')}}>
+                <TouchableOpacity style={styles.Button} activeOpacity={0.7} onPress={handleRegisterStore}>
                     <Text style={styles.Save}>Register</Text>
                 </TouchableOpacity>
             </View>

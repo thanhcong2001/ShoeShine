@@ -32,7 +32,7 @@ const Item = ({ task }) => (
     }}
   >
     <View style={{ flex: 3 }}>
-      <Text style={{ fontSize: 16 }}>{task.title}</Text>
+      <Text style={{ fontSize: wp('4.3%') }}>{task.title}</Text>
       <View style={{ marginTop: hp("0.4%"), gap: hp("0.4%") }}>
         <Text>{task.reward}</Text>
         <Progress.Bar progress={1} width={null} />
@@ -44,7 +44,7 @@ const Item = ({ task }) => (
   </View>
 );
 
-export default function Store({navigation}) {
+export default function Store({ navigation }) {
   return (
     <View style={styles.Container}>
       <View style={styles.Header}>
@@ -56,15 +56,12 @@ export default function Store({navigation}) {
             style={styles.Logo}
           />
           <View>
-            <Text style={{ fontWeight: 800, fontSize: 20 }}>Shop giá rẻ 0209</Text>
+            <Text style={{ fontWeight: 800, fontSize: wp('5%'),marginLeft:wp('5%') }}>Shop giá rẻ 0209</Text>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-              <Text style={{ fontSize: 12, color: "#949494" }}>shopep.vn/vu_demon.0209</Text>
+              <Text style={{ fontSize: wp('3.5%'), color: "#949494",marginLeft:wp('5%') }}>shopep.vn/vu_demon.0209</Text>
               <Image source={copyLogo} style={styles.CopyLogo} />
             </View>
           </View>
-        </View>
-        <View>
-          <Button title="Xem shop" color={"#40BFFF"} />
         </View>
       </View>
 
@@ -72,7 +69,6 @@ export default function Store({navigation}) {
 
       <View
         style={{
-          marginTop: wp("1.6%"),
           padding: wp("2%"),
           backgroundColor: "white",
           paddingBottom: wp("4.4%"),
@@ -80,29 +76,29 @@ export default function Store({navigation}) {
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={{ fontSize: 20, fontWeight: 600 }}>Đơn hàng</Text>
+          <Text style={{ fontSize: wp('5%'), fontWeight: 600 }}>Đơn hàng</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={{ fontSize: 20, color: "#949494" }}>Xem lịch sử đơn hàng </Text>
+            <Text style={{ fontSize: wp('5%'), color: "#949494" }}>Xem lịch sử đặt hàng </Text>
             <Icon name="chevron-right" size={wp("3.6%")} color={"#949494"} style={{ marginTop: hp("1%") }} />
           </View>
         </View>
 
         <View style={{ flexDirection: "row", marginTop: hp("2%"), gap: wp("2%") }}>
           <View style={styles.Status}>
-            <Text style={{ fontSize: 24 }}>0</Text>
-            <Text style={{ fontSize: 12, color: "#7E7E7E" }}>Chờ lấy hàng</Text>
+            <Text style={{ fontSize: wp('6%') }}>0</Text>
+            <Text style={{ fontSize: wp('3%'), color: "#7E7E7E" }}>Chờ lấy hàng</Text>
           </View>
           <View style={styles.Status}>
-            <Text style={{ fontSize: 24 }}>0</Text>
-            <Text style={{ fontSize: 12, color: "#7E7E7E" }}>Đơn hủy</Text>
+            <Text style={{ fontSize: wp('6%') }}>0</Text>
+            <Text style={{ fontSize: wp('3%'), color: "#7E7E7E" }}>Đơn hủy</Text>
           </View>
           <View style={styles.Status}>
-            <Text style={{ fontSize: 24 }}>0</Text>
-            <Text style={{ fontSize: 12, color: "#7E7E7E" }}>Trả hàng/Hoàn tiền</Text>
+            <Text style={{ fontSize: wp('6%') }}>0</Text>
+            <Text style={{ fontSize: wp('3%'), color: "#7E7E7E" }}>Trả hàng/Hoàn tiền</Text>
           </View>
           <View style={styles.Status}>
-            <Text style={{ fontSize: 24 }}>0</Text>
-            <Text style={{ fontSize: 12, color: "#7E7E7E" }}>Phản hồi đánh giá</Text>
+            <Text style={{ fontSize: wp('6%') }}>0</Text>
+            <Text style={{ fontSize: wp('3%'), color: "#7E7E7E" }}>Phản hồi đánh giá</Text>
           </View>
         </View>
       </View>
@@ -111,19 +107,19 @@ export default function Store({navigation}) {
         {/*  */}
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity style={{ alignItems: "center", justifyContent: "center", flex: 1, gap: hp("1.2%") }} onPress={() => navigation.navigate('MyProducts')}>
-            <View style={{ width: 32, height: 32 }}>
+            <View style={{ width:wp('10%'), height: hp('4.5%') }}>
               <Image source={box} style={styles.Icon} />
             </View>
             <Text style={{ color: "#B3B3B3" }}>Sản phẩm của tôi</Text>
           </TouchableOpacity>
           <View style={{ alignItems: "center", justifyContent: "center", flex: 1, gap: hp("1.2%") }}>
-            <View style={{ width: 32, height: 32 }}>
+            <View style={{ width:wp('10%'), height: hp('4.5%')  }}>
               <Image source={wallet} style={styles.Icon} />
             </View>
             <Text style={{ color: "#B3B3B3" }}>Tài chính</Text>
           </View>
           <View style={{ alignItems: "center", justifyContent: "center", flex: 1, gap: hp("1.2%") }}>
-            <View style={{ width: 32, height: 32 }}>
+            <View style={{ width:wp('10%'), height: hp('4.5%')  }}>
               <Image source={chart} style={styles.Icon} />
             </View>
             <Text style={{ color: "#B3B3B3" }}>Hiệu quả bán hàng</Text>
@@ -132,19 +128,19 @@ export default function Store({navigation}) {
         {/*  */}
         <View style={{ flexDirection: "row" }}>
           <View style={{ alignItems: "center", justifyContent: "center", flex: 1, gap: hp("1.2%") }}>
-            <View style={{ width: 32, height: 32 }}>
+            <View style={{ width:wp('10%'), height: hp('4.5%')  }}>
               <Image source={marketing} style={styles.Icon} />
             </View>
             <Text style={{ color: "#B3B3B3" }}>Kênh Marketing</Text>
           </View>
           <View style={{ alignItems: "center", justifyContent: "center", flex: 1, gap: hp("1.2%") }}>
-            <View style={{ width: 32, height: 32 }}>
+            <View style={{ width:wp('10%'), height: hp('4.5%')  }}>
               <Image source={crown} style={styles.Icon} />
             </View>
             <Text style={{ color: "#B3B3B3" }}>Đặc quyền Shop</Text>
           </View>
           <View style={{ alignItems: "center", justifyContent: "center", flex: 1, gap: hp("1.2%") }}>
-            <View style={{ width: 32, height: 32 }}>
+            <View style={{ width:wp('10%'), height: hp('4.5%')  }}>
               <Image source={help} style={styles.Icon} />
             </View>
             <Text style={{ color: "#B3B3B3" }}>Trung tâm hỗ trợ</Text>
@@ -175,9 +171,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   Logo: {
-    // width: 72,
-    // height: 72,
-    // borderRadius: 36,
+    marginLeft:wp('2.5%'),
     width: wp("15%"),
     height: wp("15%"), // Đảm bảo chiều rộng và chiều cao bằng nhau
     borderRadius: wp("7.5%"),
@@ -186,10 +180,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 4,
+    marginTop: hp('0.2%'),
     backgroundColor: "white",
     padding: wp("2%"),
-
     flex: 1,
   },
   CopyLogo: {
@@ -199,8 +192,6 @@ const styles = StyleSheet.create({
   },
   Banner: {
     width: "auto",
-    marginTop: hp("0.8%"),
-
     flex: 2,
   },
   Status: {
@@ -212,7 +203,8 @@ const styles = StyleSheet.create({
   },
 
   Icon: {
-    width: "100%",
-    height: "100%",
+    width: wp('10%'),
+    height: wp('10%'),
+
   },
 });

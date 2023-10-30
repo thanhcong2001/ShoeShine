@@ -7,10 +7,11 @@ import calendar from '../assets/calendar.png'
 import email from '../assets/email.png'
 import phone from '../assets/smartphone-call.png'
 import pass from '../assets/locked-computer.png'
-
+import shop from "../assets/shopTake.png";
+import store12 from "../assets/store12.png";
 import next from '../assets/right-arrow.png'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-const Profile = ({navigation}) => {
+const Profile = ({ navigation }) => {
     return (
         <View style={styles.Container}>
             <View style={{ flexDirection: 'row' }}>
@@ -22,10 +23,10 @@ const Profile = ({navigation}) => {
                     <Text style={{ color: '#9098B1', marginLeft: wp('6%'), fontSize: wp('4.5%') }}>@john_0209</Text>
                 </View>
             </View>
-            <TouchableOpacity  activeOpacity={0.8} style={{ marginTop: hp('3%')}}
-            onPress={() => {
-                navigation.navigate('UpdateName')
-              }}>
+            <TouchableOpacity activeOpacity={0.8} style={{ marginTop: hp('3%') }}
+                onPress={() => {
+                    navigation.navigate('UpdateName')
+                }}>
                 <View style={styles.Account}>
                     <View>
                         <Image source={user1} style={styles.Image} />
@@ -39,9 +40,9 @@ const Profile = ({navigation}) => {
                     </View>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={{ marginTop: hp('1%')}} onPress={() => {
+            <TouchableOpacity activeOpacity={0.8} style={{ marginTop: hp('1%') }} onPress={() => {
                 navigation.navigate('Gender')
-              }}>
+            }}>
                 <View style={styles.Account}>
                     <View>
                         <Image source={gender} style={styles.Image} />
@@ -69,10 +70,10 @@ const Profile = ({navigation}) => {
                     </View>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={{ marginTop: hp('1%')}}
-            onPress={()=>{
-                navigation.navigate('UpdateEmail')
-            }}>
+            <TouchableOpacity activeOpacity={0.8} style={{ marginTop: hp('1%') }}
+                onPress={() => {
+                    navigation.navigate('UpdateEmail')
+                }}>
                 <View style={styles.Account}>
                     <View>
                         <Image source={email} style={styles.Image} />
@@ -86,10 +87,10 @@ const Profile = ({navigation}) => {
                     </View>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={{ marginTop: hp('1%')}} 
-            onPress={()=>{
-                navigation.navigate('UpdatePhone')
-            }}>
+            <TouchableOpacity activeOpacity={0.8} style={{ marginTop: hp('1%') }}
+                onPress={() => {
+                    navigation.navigate('UpdatePhone')
+                }}>
                 <View style={styles.Account}>
                     <View>
                         <Image source={phone} style={styles.Image} />
@@ -103,13 +104,13 @@ const Profile = ({navigation}) => {
                     </View>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={{marginTop: hp('1%')}}
-            onPress={()=>{
-                navigation.navigate('UpdatePass')
-            }}>
+            <TouchableOpacity activeOpacity={0.8} style={{ marginTop: hp('1%') }}
+                onPress={() => {
+                    navigation.navigate('UpdatePass')
+                }}>
                 <View style={styles.Account}>
                     <View>
-                        <Image source={pass} style={styles.Image}/>
+                        <Image source={pass} style={styles.Image} />
                     </View>
                     <View style={styles.Txt}>
                         <Text style={styles.Title}>Change Password</Text>
@@ -118,6 +119,14 @@ const Profile = ({navigation}) => {
                     <View>
                         <Image style={styles.NextIcon} source={next} />
                     </View>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+                navigation.navigate('Store')
+            }}>
+                <View style={styles.Account}>
+                    <Image source={store12} style={styles.Image} />
+                    <Text style={styles.Title}>My Store</Text>
                 </View>
             </TouchableOpacity>
         </View>
@@ -139,7 +148,7 @@ const styles = StyleSheet.create({
         borderColor: '#c5cfbc',
         height: hp('7%'),
         paddingLeft: wp('5%'),
-        borderTopWidth:1,
+        borderTopWidth: 1,
     },
     Image: {
         width: wp('9%'),
@@ -162,8 +171,8 @@ const styles = StyleSheet.create({
         paddingRight: wp('1%')
     },
     NextIcon: {
-        width: wp('3%'), 
-        height: hp('2.2%'), 
+        width: wp('3%'),
+        height: hp('2.2%'),
         marginRight: wp('2%'),
         marginLeft: wp('2%'),
     },
