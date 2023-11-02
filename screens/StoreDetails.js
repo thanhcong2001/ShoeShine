@@ -5,6 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import heart from '../assets/heart.png'
 import vu from '../assets/vu.jpg'
 import rating1 from '../assets/rating1.png'
+import { addData } from '../utils/asyncStorageUtil';
 const StoreDetails = ({ route, navigation }) => {
   const { storeImage, storeName, Distance, Id } = route.params;
   const [data, setData] = useState([]);
@@ -111,18 +112,20 @@ const StoreDetails = ({ route, navigation }) => {
     </TouchableOpacity>
   );
  
-  const onBooking = () => {  
+  const onBooking = async () => {  
     var dataToSend = {
       "serviceId": selectedService,
       "storeId": Id,
       "categoryIdArray": selectedOptions  
     }
-    axios.post('http://shoeshine-001-site1.ftempurl.com/api/bookings', dataToSend)
-      .then((response) => {
-        if (response.status === 200) {
-          navigation.navigate('Shipping') 
-        }
-      })
+    await addData(dataToSend)
+    navigation.navigate('Shipping') 
+    // axios.post('http://shoeshine-001-site1.ftempurl.com/api/bookings', dataToSend)
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       navigation.navigate('Shipping') 
+    //     }
+    //   })
   }
 
   return (

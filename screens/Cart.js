@@ -2,13 +2,14 @@ import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Pressabl
 import React, { useState, useEffect } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import sportProduct from '../assets/sportShoe1.jpg'
-import { useRoute } from '@react-navigation/native';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import trash from '../assets/delete.png'
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getData } from '../utils/asyncStorageUtil';
 
 const Cart = ({ navigation }) => {
-  const route = useRoute(); 
+  const route = useRoute();
   const [data, setData] = useState([]);
   const [selectedService, setSelectedService] = useState(null)
   const [serviceList, setServiceList] = useState(null)
@@ -34,7 +35,7 @@ const Cart = ({ navigation }) => {
       // Làm mới dữ liệu bằng cách gọi lại fetchData
       getBooking();
       PriceTotal();
-    }, 1000); // Làm mới mỗi 60 giây (1 phút)    
+    }, 60000); // Làm mới mỗi 60 giây (1 phút)    
 
     // Trả về một hàm để xóa interval khi component bị unmount
     return () => {
@@ -53,9 +54,12 @@ const Cart = ({ navigation }) => {
 
   const getBooking = async () => {
     try {
-      const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/bookings');
-      const orders = response.data;
-      setData(orders);
+      // const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/bookings');
+      // const orders = response.data;
+      // console.log(orders)
+      // setData(orders);
+      const orders = await getData()
+      setData(orders)
       if (orders.length > 0) {
         const lastOrder = orders[orders.length - 1];
         const itemFound = serviceList.find(i => i.serviceId == lastOrder.serviceId)
@@ -84,7 +88,7 @@ const Cart = ({ navigation }) => {
       quantityItem: 2
     }
     console.log(data);
-    await axios.post(`http://shoeshine-001-site1.ftempurl.com/api/orders`, data)
+    await axios.patch(`http://shoeshine-001-site1.ftempurl.com/api/orders`, data)
       .then(res => {
         navigation.navigate(`Payment`)
       })
@@ -133,8 +137,8 @@ const Cart = ({ navigation }) => {
                   <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>+</Text>
                   </Pressable>
-                </View> 
-              </View>         
+                </View>
+              </View>
             </View>
             <View>
             </View>
