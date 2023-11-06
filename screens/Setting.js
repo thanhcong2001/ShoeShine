@@ -43,7 +43,7 @@ const Setting = ({ navigation }) => {
           <Text style={styles.Title}>DashBoard</Text>
         </View>
       </TouchableOpacity>   */}
-      <TouchableOpacity>
+      <TouchableOpacity  onPress={()=>navigation.navigate('QR')}>
         <View style={styles.Account}>
           <Image source={location} style={styles.Image} />
           <Text style={styles.Title}>Address</Text>

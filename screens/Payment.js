@@ -45,7 +45,7 @@ const Payment = ({ navigation }) => {
         }
     };
     const [isPressed, setIsPressed] = useState(false);
-    // const [isPressed1, setIsPressed1] = useState(false);
+    const [isPressed1, setIsPressed1] = useState(false);
     // const [isPressed2, setIsPressed2] = useState(false);
     const momo = async () => {
         try {
@@ -71,9 +71,10 @@ const Payment = ({ navigation }) => {
     const handlePress = () => {
         setIsPressed(!isPressed);
     };
-    // const handlePress1 = () => {
-    //     setIsPressed1(!isPressed1);
-    // };
+    const handlePress1 = () => {
+        setIsPressed1(!isPressed1);
+        navigation.navigate('QR')
+    };
     // const handlePress2 = () => {
     //     setIsPressed2(!isPressed2);
     // };
@@ -96,15 +97,15 @@ const Payment = ({ navigation }) => {
             <View>
                 <TouchableOpacity style={[
                     styles.Payment,
-                    // { backgroundColor: isPressed1 ? '#EBF0FF' : 'white' },
+                    { backgroundColor: isPressed1 ? '#EBF0FF' : 'white' },
                 ]}
-                // onPress={handlePress1}
+                onPress={handlePress1}
                 >
                     <View>
                         <Image style={styles.Icon} source={paypal} />
                     </View>
                     <View>
-                        <Text style={styles.text}>Paypal</Text>
+                        <Text style={styles.text}>Momo QR</Text>
                     </View>
                 </TouchableOpacity>
             </View>

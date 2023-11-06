@@ -29,6 +29,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import MyProducts from '../screens/MyProducts';
 import Success from '../screens/Success';
 import DashBoard from '../screens/Dashboard';
+import QR from '../screens/QR';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
@@ -125,7 +126,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="AddProduct" component={AddProduct} options={{ title: 'Add Service' }} />
       <Stack.Screen name="Success" component={Success} options={{ headerShown: false }} />
       <Stack.Screen name="DashBoard" component={DashBoard} options={{ headerShown: false }} />
-
+      <Stack.Screen name="QR" component={QR} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

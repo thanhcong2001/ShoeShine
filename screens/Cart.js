@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Pressabl
 import React, { useState, useEffect } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import sportProduct from '../assets/sportShoe1.jpg'
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';             
 import trash from '../assets/delete.png'
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -68,20 +68,20 @@ const Cart = ({ navigation }) => {
         const numberOfIds = listProduct.length;
         setItems(numberOfIds)
       }
-      else {
+      else {     
       }
     } catch (error) {
     }
-  };
+  }; 
 
   const createOrder = async () => {
     const data = {
       paymentMethodId: 1,
       userId: userId._j,
-      address: '148/4A Thanh Pho Ho Chi Minh',
-      totalPrice: 100000,
-      shipfee: 50000,
-      quantityItem: 2
+      address: '148/4A Thanh Pho Ho Chi Minh',     
+      totalPrice: total,
+      shipfee: 5000,          
+      quantityItem: items
     }
     console.log(data);
     await axios.post(`http://shoeshine-001-site1.ftempurl.com/api/orders`, data)
@@ -95,17 +95,17 @@ const Cart = ({ navigation }) => {
 
   function convertVND(price) {
     if (price != null || price != undefined || price != '' || price) return price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
-    else return 0
-  }
+    else return 0   
+  }    ``
 
   const incrementQuantity = (id) => {
-    if (quantity < 5) {
-      setQuantity(quantity + 1);
+    if (quantity < 5) {     
+      setQuantity(quantity + 1);   
     }
   };
 
   const decrementQuantity = () => {
-    if (quantity > 1) {
+    if (quantity > 1) {    
       setQuantity(quantity - 1);
     }
   };
@@ -163,13 +163,13 @@ const Cart = ({ navigation }) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={{ marginRight: wp('41%'), fontWeight: 'bold' }}>Total Price</Text>
           <Text style={{ color: '#40BFFF', fontWeight: 'bold' }}>{total}</Text>
-        </View>
+        </View>  
       </View>
       <View>
         <TouchableOpacity style={styles.NextButton} onPress={createOrder}>
           <Text style={{ marginLeft: wp('35%'), marginTop: hp('0.5%'), color: 'white', fontSize: wp('4.5%'), fontWeight: 'bold' }}>Next</Text>
         </TouchableOpacity>
-      </View>
+      </View>   
     </SafeAreaView>
   )
 }
@@ -178,7 +178,7 @@ const Cart = ({ navigation }) => {
 
 export default Cart
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({   
   Container: {
     flex: 1,
     backgroundColor: 'white',
