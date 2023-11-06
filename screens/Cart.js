@@ -2,13 +2,14 @@ import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, Pressabl
 import React, { useState, useEffect } from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import sportProduct from '../assets/sportShoe1.jpg'
-import { useRoute } from '@react-navigation/native';             
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import trash from '../assets/delete.png'
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getData } from '../utils/asyncStorageUtil';
 
 const Cart = ({ navigation }) => {
-  const route = useRoute(); 
+  const route = useRoute();
   const [data, setData] = useState([]);
   const [selectedService, setSelectedService] = useState(null)
   const [serviceList, setServiceList] = useState(null)
@@ -18,28 +19,14 @@ const Cart = ({ navigation }) => {
   const [totalPrice, setTotalPrice] = useState('');
   const [items, setItems] = useState('');
   const [total, setTotal] = useState();
-
+  const [cart, setCart] = useState()
   const PriceTotal = () => {
     setTotalPrice(selectedService?.servicePrice)
     setTotal(totalPrice * items)
   }
 
   useEffect(() => {
-    // Ban đầu, fetch dữ liệu và sau đó thiết lập một interval cho việc làm mới
     getBooking();
-    getService();
-    PriceTotal();
-
-    const refreshInterval = setInterval(() => {
-      // Làm mới dữ liệu bằng cách gọi lại fetchData
-      getBooking();
-      PriceTotal();
-    }, 1000); // Làm mới mỗi 60 giây (1 phút)    
-
-    // Trả về một hàm để xóa interval khi component bị unmount
-    return () => {
-      clearInterval(refreshInterval);
-    };
   }, []);
 
 
@@ -51,40 +38,60 @@ const Cart = ({ navigation }) => {
       .catch(err => { })
   }
 
+  const cartItems = async () => {
+    var dataToSend = {
+      "serviceId": products.serviceId,
+      "storeId": products.storeId,
+      "categoryIdArray": products.categoryIdArray
+    }
+    await axios.post('http://shoeshine-001-site1.ftempurl.com/api/bookings/cart', dataToSend)
+      .then(res => {
+        if (res.status === 200) {
+          setCart(res.data)
+        }
+        else{
+          console.log("Lỗi");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   const getBooking = async () => {
     try {
-      const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/bookings');
-      const orders = response.data;
-      setData(orders);
+      const orders = await getData()
+      setData(orders)
       if (orders.length > 0) {
         const lastOrder = orders[orders.length - 1];
-        const itemFound = serviceList.find(i => i.serviceId == lastOrder.serviceId)
-        setSelectedService(itemFound)
-        setOrder(lastOrder);
-        const listProduct = order?.categoryName?.map((name, index) => {
-          return { id: index + 1, name }
-        })
-        setListProduct(listProduct);
-        const numberOfIds = listProduct.length;
-        setItems(numberOfIds)
+        console.log(lastOrder);
+        setListProduct(lastOrder)
+        // const itemFound = serviceList.find(i => i.serviceId == lastOrder.serviceId)
+        // setSelectedService(itemFound)
+        // setOrder(lastOrder);
+        // const listProduct = order?.categoryName?.map((name, index) => {
+        //   return { id: index + 1, name }
+        // })
+        // setListProduct(listProduct);
+        // const numberOfIds = listProduct.length;
+        // setItems(numberOfIds)
       }
-      else {     
+      else {
       }
     } catch (error) {
     }
-  }; 
+  };
 
   const createOrder = async () => {
     const data = {
       paymentMethodId: 1,
       userId: userId._j,
-      address: '148/4A Thanh Pho Ho Chi Minh',     
+      address: '148/4A Thanh Pho Ho Chi Minh',
       totalPrice: total,
-      shipfee: 5000,          
+      shipfee: 5000,
       quantityItem: items
     }
-    console.log(data);
-    await axios.post(`http://shoeshine-001-site1.ftempurl.com/api/orders`, data)
+    await axios.patch(`http://shoeshine-001-site1.ftempurl.com/api/orders`, data)
       .then(res => {
         navigation.navigate(`Payment`)
       })
@@ -95,17 +102,17 @@ const Cart = ({ navigation }) => {
 
   function convertVND(price) {
     if (price != null || price != undefined || price != '' || price) return price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })
-    else return 0   
-  }    ``
+    else return 0
+  } ``
 
   const incrementQuantity = (id) => {
-    if (quantity < 5) {     
-      setQuantity(quantity + 1);   
+    if (quantity < 5) {
+      setQuantity(quantity + 1);
     }
-  };
+  }; 
 
   const decrementQuantity = () => {
-    if (quantity > 1) {    
+    if (quantity > 1) {
       setQuantity(quantity - 1);
     }
   };
@@ -113,18 +120,18 @@ const Cart = ({ navigation }) => {
     <SafeAreaView style={styles.Container}>
       <View style={styles.Line}></View>
       <ScrollView>
-        {order?.categoryName?.map((name, index) =>
-          <View style={styles.Products} key={name}>
+        {cart?.map((name, id) =>  
+          <View style={styles.Products} key={id}> 
             <View>
-              <Image source={sportProduct} style={styles.Picture} />
+              <Image source={sportProduct} style={styles.Picture} /> 
             </View>
             <View style={styles.TitileProducts}>
               <View>
-                <Text style={{ fontSize: wp('4%'), fontWeight: 'bold', color: '#223263', marginBottom: hp('1%') }}>{name}</Text>
-                <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#FB7181', marginBottom: hp('0.5%') }}>{order.serviceName}</Text>
+                <Text style={{ fontSize: wp('4%'), fontWeight: 'bold', color: '#223263', marginBottom: hp('1%') }}>{name.nameCategory}</Text>
+                <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#FB7181', marginBottom: hp('0.5%') }}>{name.nameService}</Text>
               </View>
               <View style={{ flexDirection: 'row' }}>
-                <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#40BFFF', marginBottom: hp('0.5%'), width: wp('13.3%') }}>{selectedService.servicePrice}</Text>
+                <Text style={{ fontSize: wp('3.2%'), fontWeight: 'bold', color: '#40BFFF', marginBottom: hp('0.5%'), width: wp('13.3%') }}>{name.priceService}</Text>
                 <View style={styles.counter}>
                   <Pressable onPress={decrementQuantity} style={styles.button}>
                     <Text style={{ marginLeft: wp('3%'), fontSize: wp('5%'), fontWeight: 'bold', color: '#9098B1' }}>-</Text>
@@ -133,8 +140,8 @@ const Cart = ({ navigation }) => {
                   <Pressable style={styles.button}>
                     <Text style={styles.buttonText}>+</Text>
                   </Pressable>
-                </View> 
-              </View>         
+                </View>
+              </View>
             </View>
             <View>
             </View>
@@ -163,13 +170,13 @@ const Cart = ({ navigation }) => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text style={{ marginRight: wp('41%'), fontWeight: 'bold' }}>Total Price</Text>
           <Text style={{ color: '#40BFFF', fontWeight: 'bold' }}>{total}</Text>
-        </View>  
+        </View>
       </View>
       <View>
-        <TouchableOpacity style={styles.NextButton} onPress={createOrder}>
+        <TouchableOpacity style={styles.NextButton} onPress={cartItems}>
           <Text style={{ marginLeft: wp('35%'), marginTop: hp('0.5%'), color: 'white', fontSize: wp('4.5%'), fontWeight: 'bold' }}>Next</Text>
         </TouchableOpacity>
-      </View>   
+      </View>
     </SafeAreaView>
   )
 }
@@ -178,7 +185,7 @@ const Cart = ({ navigation }) => {
 
 export default Cart
 
-const styles = StyleSheet.create({   
+const styles = StyleSheet.create({
   Container: {
     flex: 1,
     backgroundColor: 'white',
