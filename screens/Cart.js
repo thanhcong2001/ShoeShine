@@ -24,11 +24,17 @@ const Cart = ({ navigation }) => {
 
   useEffect(() => {
     getBooking();
-    cartItems();
   }, []);
+  useEffect(() => {
+    if (products) {
+      cartItems();
+    }
+  }, [products]);  
 
   const PriceTotal = () => {
-
+    setTotalPrice(cart[0]?.priceService)
+    console.log("Thanh Cong: ", cart[0]?.priceService);
+    setTotal(totalPrice * items)
   }
   const cartItems = async () => {
     var dataToSend = {
@@ -42,33 +48,31 @@ const Cart = ({ navigation }) => {
           setCart(res.data)
         }
         else {
-          console.log("Lỗi");    
+          console.log("Lỗi");
         }
       })
       .catch(err => {
         console.log(err);
       })
-    setTotalPrice(cart[0]?.priceService)
-    console.log("Thanh Cong: ", cart[0]?.priceService);
-    setTotal(totalPrice * items)
+
   }
 
-  const getBooking = async () => {
-    try {
-      const orders = await getData()
-      setData(orders)
-      if (orders.length > 0) {
-        const lastOrder = orders[orders.length - 1];
-        console.log(lastOrder);
-        setListProduct(lastOrder)
-        const numberOfIds = lastOrder.categoryIdArray.length;
-        console.log("Tuan Vu: ", lastOrder.categoryIdArray.length);
-        setItems(numberOfIds)
-      }
-      else {
-      }
-    } catch (error) {
-    }
+  const getBooking = () => {
+    getData()
+      .then(orders => {
+        setData(orders);
+        if (orders.length > 0) {
+          const lastOrder = orders[orders.length - 1];
+          setListProduct(lastOrder);
+          const numberOfIds = lastOrder.categoryIdArray.length;
+          console.log("Tuan Vu: ", lastOrder.categoryIdArray.length);
+          setItems(numberOfIds);
+        }
+        // Các xử lý khác ở đây nếu cần
+      })
+      .catch(error => {
+        // Xử lý lỗi ở đây nếu cần
+      });
   };
   const getService = async () => {
     await axios.get('http://shoeshine-001-site1.ftempurl.com/api/services')
