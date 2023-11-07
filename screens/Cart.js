@@ -32,7 +32,7 @@ const Cart = ({ navigation }) => {
   const [items, setItems] = useState("");
   const [total, setTotal] = useState();
   const [cart, setCart] = useState([]);
-  useEffect(() => { 
+  useEffect(() => {
     if (isFocused) {
       getBooking();
     }
@@ -46,7 +46,7 @@ const Cart = ({ navigation }) => {
     await removeAll();
     setCart([]);
     setData([]);
-    setTotal([])
+    setTotal([]);
   };
   const PriceTotal = () => {};
   const getBooking = async () => {
@@ -72,13 +72,13 @@ const Cart = ({ navigation }) => {
           dataToSend
         );
         if (response.status !== 200) return null;
-        return response.data[0];
+        return Object.values(response.data);
       } catch (error) {
         return null;
       }
     });
     const results = await Promise.all(promises);
-    const updatedCart = results.filter((result) => result !== null);
+    const updatedCart = results.filter((result) => result !== null).flat();
     setCart(updatedCart);
     const totalPrice = updatedCart.reduce(
       (total, item) => total + item.priceService,
