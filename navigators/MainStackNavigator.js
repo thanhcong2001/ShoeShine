@@ -103,7 +103,7 @@ const MainStackNavigator = () => {
       <Stack.Screen name="WriteFeed" component={WriteFeed} options={{ title: 'Write Review' }} />
       <Stack.Screen name="RegisterStore" component={RegisterStore} options={{ title: 'Register Store' }} />
       <Stack.Screen name="MyProducts" component={MyProducts}
-        options={{
+        options={{ 
           headerTitle: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={{ fontSize: wp('5%'),marginLeft:wp('18%') }}>My Service</Text>
