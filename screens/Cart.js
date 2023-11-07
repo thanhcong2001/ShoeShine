@@ -46,6 +46,7 @@ const Cart = ({ navigation }) => {
     await removeAll();
     setCart([]);
     setData([]);
+    setTotal([])
   };
   const PriceTotal = () => {};
   const getBooking = async () => {
