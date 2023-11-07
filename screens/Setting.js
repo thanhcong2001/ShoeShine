@@ -8,21 +8,17 @@ import creditCard from "../assets/payment.png";
 import shop from "../assets/shopTake.png";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
 
 const Setting = ({ navigation }) => {
   const [isPressed, setIsPressed] = useState(false);
   const handlePress = () => {
-    // Khi nút được nhấn vào, đảo ngược trạng thái
     navigation.navigate("Profile");
   };
-  const logout =() => {
-    try {
-      AsyncStorage.removeItem('userId');
-      navigation.navigate('Main');
-    } catch (error) {
-      console.error('Lỗi khi đăng xuất:', error);
-    }
+  const handleLogout = () => {
+      navigation.navigate('Login');
   };
+
   return (
     <View style={styles.Container}>
       <TouchableOpacity onPress={handlePress}>
@@ -43,7 +39,7 @@ const Setting = ({ navigation }) => {
           <Text style={styles.Title}>DashBoard</Text>
         </View>
       </TouchableOpacity>   */}
-      <TouchableOpacity  onPress={()=>navigation.navigate('QR')}>
+      <TouchableOpacity onPress={handleLogout}>
         <View style={styles.Account}>
           <Image source={location} style={styles.Image} />
           <Text style={styles.Title}>Address</Text>

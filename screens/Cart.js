@@ -46,9 +46,10 @@ const Cart = ({ navigation }) => {
     await removeAll();
     setCart([]);
     setData([]);
-    setTotal([]);
+    setItems("")
+    setTotalPrice([])
   };
-  const PriceTotal = () => {};
+  const PriceTotal = () => { };
   const getBooking = async () => {
     const orders = await getData();
     setData(orders);
@@ -85,7 +86,7 @@ const Cart = ({ navigation }) => {
       0
     );
     setTotalPrice(totalPrice);
-    setTotal(totalPrice * updatedCart.length);
+    console.log("cong dep traI:",totalPrice);
   };
 
   const getService = async () => {
@@ -94,20 +95,39 @@ const Cart = ({ navigation }) => {
       .then((res) => {
         setServiceList(res.data);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
+  const createBooking = async () => {
+    const promises = data.map(async (item) => {
+      const data = {
+        serviceId: item.serviceId,
+        storeId: item.storeId,
+        categoryIdArray: item.categoryIdArray,
+      };
+      try {
+        const response = await axios.post(
+          "http://shoeshine-001-site1.ftempurl.com/api/bookings",
+          data
+        );
+        if (response.status !== 200) return null;
+        return createOrder();
+      } catch (error) {
+        return null;
+      }
+    });
+  }
 
   const createOrder = async () => {
     const data = {
       paymentMethodId: 1,
       userId: userId._j,
       address: "148/4A Thanh Pho Ho Chi Minh",
-      totalPrice: total,
+      totalPrice: totalPrice,
       shipfee: 5000,
       quantityItem: items,
     };
     await axios
-      .patch(`http://shoeshine-001-site1.ftempurl.com/api/orders`, data)
+      .post(`http://shoeshine-001-site1.ftempurl.com/api/orders`, data)
       .then((res) => {
         navigation.navigate(`Payment`);
       })
@@ -226,7 +246,7 @@ const Cart = ({ navigation }) => {
           >
             Items({items})
           </Text>
-          <Text>{total}</Text>
+          <Text>{totalPrice}</Text>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text
@@ -244,11 +264,11 @@ const Cart = ({ navigation }) => {
           <Text style={{ marginRight: wp("41%"), fontWeight: "bold" }}>
             Total Price
           </Text>
-          <Text style={{ color: "#40BFFF", fontWeight: "bold" }}>{total}</Text>
+          <Text style={{ color: "#40BFFF", fontWeight: "bold" }}>{totalPrice}</Text>
         </View>
       </View>
       <View>
-        <TouchableOpacity style={styles.NextButton} onPress={removeItem}>
+        <TouchableOpacity style={styles.NextButton} onPress={createBooking}>
           <Text
             style={{
               marginLeft: wp("35%"),

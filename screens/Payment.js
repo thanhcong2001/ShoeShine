@@ -6,7 +6,7 @@ import bank from '../assets/bank.png'
 import paypal from '../assets/paypal.png'
 import { Linking } from 'react-native';
 import axios from 'axios';
-
+import { getData, removeAll } from "../utils/asyncStorageUtil";
 const Payment = ({ navigation }) => {
     const [data, setData] = useState([]);
     const [filteredOrders, setFilteredOrders] = useState([]);
@@ -25,7 +25,9 @@ const Payment = ({ navigation }) => {
             clearInterval(refreshInterval);
         };
     }, []);
-
+    const removeItem = async () => {
+        await removeAll();
+    };
     const getMomo = async () => {
         try {
             const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/orders');
@@ -36,6 +38,7 @@ const Payment = ({ navigation }) => {
                 const lastOrderIsOrderStatus = lastOrder.isOrderStatus;
                 if (lastOrderIsOrderStatus === 1) {
                     navigation.navigate("Success")
+                    removeItem()
                 } else {
                     // console.log('isOrderStatus của phần tử cuối cùng không phải là 0.');
                 }
@@ -99,7 +102,7 @@ const Payment = ({ navigation }) => {
                     styles.Payment,
                     { backgroundColor: isPressed1 ? '#EBF0FF' : 'white' },
                 ]}
-                onPress={handlePress1}
+                    onPress={handlePress1}
                 >
                     <View>
                         <Image style={styles.Icon} source={paypal} />
