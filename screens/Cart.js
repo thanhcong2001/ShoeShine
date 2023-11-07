@@ -19,25 +19,17 @@ const Cart = ({ navigation }) => {
   const [totalPrice, setTotalPrice] = useState('');
   const [items, setItems] = useState('');
   const [total, setTotal] = useState();
-  const [cart, setCart] = useState()
-  const PriceTotal = () => {
-    setTotalPrice(selectedService?.servicePrice)
-    setTotal(totalPrice * items)
-  }
+  const [cart, setCart] = useState([])
+
 
   useEffect(() => {
     getBooking();
+    cartItems();
   }, []);
 
+  const PriceTotal = () => {
 
-  const getService = async () => {
-    await axios.get('http://shoeshine-001-site1.ftempurl.com/api/services')
-      .then(res => {
-        setServiceList(res.data)
-      })
-      .catch(err => { })
   }
-
   const cartItems = async () => {
     var dataToSend = {
       "serviceId": products.serviceId,
@@ -49,13 +41,16 @@ const Cart = ({ navigation }) => {
         if (res.status === 200) {
           setCart(res.data)
         }
-        else{
-          console.log("Lỗi");
+        else {
+          console.log("Lỗi");    
         }
       })
       .catch(err => {
         console.log(err);
       })
+    setTotalPrice(cart[0]?.priceService)
+    console.log("Thanh Cong: ", cart[0]?.priceService);
+    setTotal(totalPrice * items)
   }
 
   const getBooking = async () => {
@@ -66,21 +61,22 @@ const Cart = ({ navigation }) => {
         const lastOrder = orders[orders.length - 1];
         console.log(lastOrder);
         setListProduct(lastOrder)
-        // const itemFound = serviceList.find(i => i.serviceId == lastOrder.serviceId)
-        // setSelectedService(itemFound)
-        // setOrder(lastOrder);
-        // const listProduct = order?.categoryName?.map((name, index) => {
-        //   return { id: index + 1, name }
-        // })
-        // setListProduct(listProduct);
-        // const numberOfIds = listProduct.length;
-        // setItems(numberOfIds)
+        const numberOfIds = lastOrder.categoryIdArray.length;
+        console.log("Tuan Vu: ", lastOrder.categoryIdArray.length);
+        setItems(numberOfIds)
       }
       else {
       }
     } catch (error) {
     }
   };
+  const getService = async () => {
+    await axios.get('http://shoeshine-001-site1.ftempurl.com/api/services')
+      .then(res => {
+        setServiceList(res.data)
+      })
+      .catch(err => { })
+  }
 
   const createOrder = async () => {
     const data = {
@@ -109,7 +105,7 @@ const Cart = ({ navigation }) => {
     if (quantity < 5) {
       setQuantity(quantity + 1);
     }
-  }; 
+  };
 
   const decrementQuantity = () => {
     if (quantity > 1) {
@@ -120,10 +116,10 @@ const Cart = ({ navigation }) => {
     <SafeAreaView style={styles.Container}>
       <View style={styles.Line}></View>
       <ScrollView>
-        {cart?.map((name, id) =>  
-          <View style={styles.Products} key={id}> 
+        {cart?.map((name, id) =>
+          <View style={styles.Products} key={id}>
             <View>
-              <Image source={sportProduct} style={styles.Picture} /> 
+              <Image source={sportProduct} style={styles.Picture} />
             </View>
             <View style={styles.TitileProducts}>
               <View>

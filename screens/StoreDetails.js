@@ -34,13 +34,13 @@ const StoreDetails = ({ route, navigation }) => {
 
   const fetchDataFromApi = async () => {
     try {
-      const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/categories/get-all');
+      const response = await axios.get(`http://shoeshine-001-site1.ftempurl.com/api/categories/${Id}`);
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
-  const renderTypeItem = ({ item }) => (
+  const renderTypeItem = ({ item }) => ( 
     <TouchableOpacity
       style={[
         styles.Circle,
@@ -54,7 +54,7 @@ const StoreDetails = ({ route, navigation }) => {
  
   const fetchService = async () => {
     try {
-      const response = await axios.get('http://shoeshine-001-site1.ftempurl.com/api/services');
+      const response = await axios.get(`http://shoeshine-001-site1.ftempurl.com/api/services/${Id}`);
       setService(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
